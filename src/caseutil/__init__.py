@@ -1,13 +1,12 @@
 """
 Case convert and verify for Python: snake_case, camelCase, kebab-case, and more.
 """
-
-__version__ = '0.6.4'
-
 from argparse import ArgumentParser
 from io import TextIOBase
 import re
 import sys
+
+from .__version__ import __version__
 
 __all__ = [
     'is_camel',

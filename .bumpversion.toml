@@ -3,7 +3,7 @@ current_version = "0.6.4"
 allow_dirty = true
 
 [[tool.bumpversion.files]]
-filename = "src/caseutil.py"
+filename = "src/caseutil/__version__.py"
 
 [[tool.bumpversion.files]]
 filename = "README.md"

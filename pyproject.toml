@@ -69,4 +69,4 @@ test = [
 
 [tool.pdm.version]
 source = "file"
-path = "src/caseutil.py"
+path = "src/caseutil/__version__.py"
