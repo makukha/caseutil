@@ -6,6 +6,7 @@ from argparse import ArgumentParser
 from io import TextIOBase
 import re
 import sys
+from typing import List, Union
 
 from .__version__ import __version__
 
@@ -93,7 +94,7 @@ def tokenize(text: str) -> str:
     return values.strip(',')
 
 
-def words(text: str) -> list[str]:
+def words(text: str) -> List[str]:
     return tokenize(text).split(',')
 
 
@@ -189,7 +190,7 @@ def to_upper(text: str) -> str:
 # universal functions
 
 
-def is_case(case: Case | str, text: str) -> bool:
+def is_case(case: Union[Case, str], text: str) -> bool:
     case = getattr(case, 'value', case)
     try:
         return {
@@ -206,7 +207,7 @@ def is_case(case: Case | str, text: str) -> bool:
         raise ValueError(f'Unsupported case: {case}')
 
 
-def to_case(case: Case | str, text: str) -> str:
+def to_case(case: Union[Case, str], text: str) -> str:
     case = getattr(case, 'value', case)
     try:
         return {
