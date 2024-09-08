@@ -75,7 +75,7 @@ path = "src/caseutil/__version__.py"
 # Bumpversion
 
 [tool.bumpversion]
-current_version = "0.6.4"
+current_version = "0.6.5"
 files = [
   {filename = "src/caseutil/__version__.py"},
   {filename = "README.md"},
