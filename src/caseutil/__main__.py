@@ -1,5 +1,5 @@
-from . import main
+from . import main  # pragma: no cover
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == '__main__':  # pragma: no cover
+    main()  # pragma: no cover
