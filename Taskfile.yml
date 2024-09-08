@@ -6,51 +6,114 @@ vars:
 
 tasks:
 
+  # init
+
   init:
     desc: Initialize dev environment.
     cmds:
-      - brew bundle
-      - pyenv install --skip-existing $(pyenv local)
-      - task: init:python-versions
+      - task: init:homebrew
+      - task: init:python
+      - task: init:python-env
 
-  init:python-versions:
+  init:homebrew:
+    internal: true
+    dir: .dev
+    sources: [Brewfile]
+    env:
+      HOMEBREW_BUNDLE_NO_LOCK: 1
+    cmds:
+      - brew bundle
+
+  init:python:
     internal: true
     sources:
       - tox.ini
     vars:
-      PYTHON_VERSIONS: {sh: '{{.GET_PYTHON_VERSIONS}}'}
+      PYTHON_VERSIONS:
+        sh: tox --listenvs | sed -ne 's/^py\([23]\)\.\{0,1\}\([0-9].*\)/\1.\2/p' | sort -mu | tr '\n' ' '
     cmds:
       - cmd: pyenv install --skip-existing {{.ITEM}}
         for: {var: PYTHON_VERSIONS}
 
+  init:python-env:
+    internal: true
+    status:
+      - test -e .venv
+    cmds:
+      - pyenv install --skip-existing $(pyenv local)
+      - pdm venv create $(pyenv prefix $(pyenv local))
+
+  # install
 
   install:
-    desc: Install dev python environment.
+    desc: Install dev environment.
+    cmds:
+      - task: install:python-dependencies
+      - task: install:python-package
+
+  install:python-dependencies:
+    internal: true
+    sources: [pyproject.toml]
+    cmds:
+      - pdm lock --update-reuse
+      - pdm install --check --dev --no-self
+
+  install:python-package:
+    internal: true
+    sources: [src/**/*.*]
     cmds:
       - pdm install --check --dev
 
-  lint:
-    desc: Run linters and code formatters.
-    cmds:
-      - ruff check
+  # build
 
-  gen:test_readme:
+  build:
+    desc: Build all.
+    cmds:
+      - task: build:test-readme
+
+  build:test-readme:
     internal: true
     sources: [README.md]
     generates: [tests/test_readme.txt]
     cmds:
-      - pdm run python bin/dev.py get-markdown-code --lang=doctest README.md
+      - sed -ne '/^```doctest/,/^```/{/^```doctest/d; s/^```//; p;}' README.md
           > tests/test_readme.txt
+
+  # lint, format
+
+  lint:
+    desc: Run linters.
+    cmds:
+      - pdm run mypy src
+      - ruff check
+      - ruff format --check
+
+  format:
+    desc: Run code formatters.
+    cmds:
+      - ruff format
+
+  # test
 
   test:
     desc: Run tests.
-    deps: [install]
-    vars:
-      VERSION: {sh: pdm show --version}
+    deps: [install, build, lint]
     cmds:
-      - pdm build
-      - task: gen:test_readme
-      - tox run-parallel --installpkg dist/caseutil-{{.VERSION}}-py2.py3-none-any.whl
+      - tox run
+
+  test:main:
+    desc: Run tests in main environment.
+    deps: [install, build]
+    cmds:
+      - tox run -m main
+
+  test:debug:
+    desc: Run tests and open debugger on errors.
+    deps: [install, build]
+    cmds:
+      - pdm run pytest --pdb {{.CLI_ARGS}}
+
+  # version, publish
 
   version:
     desc: Bump project version. Use task version -- patch|minor|major|...
@@ -63,27 +126,3 @@ tasks:
       - test $(git rev-parse --abbrev-ref HEAD) = main
     cmds:
       - pdm publish
-
-  check:python-versions:
-    desc: Check python versions available to pyenv.
-    vars:
-      PYTHON_VERSIONS: {sh: '{{.GET_PYTHON_VERSIONS}}'}
-    cmds:
-      - brew upgrade --quiet pyenv
-      - cmd:
-          export V="$(echo {{.ITEM}} | cut -d. -f1-2)";
-          echo "{{.ITEM}}" "--" "$(
-            pyenv latest --known $V 2>/dev/null
-            || pyenv install --list | sed -ne "s|  $V|$V|p" | xargs
-          )"
-        for: {var: PYTHON_VERSIONS}
-        silent: true
-
-  docs:scorecard:
-    desc: Update security scorecard
-    vars:
-      GITHUB_TOKEN: {sh: keyring get token.github.caseutil scorecard}
-    env:
-      GITHUB_TOKEN: '{{.GITHUB_TOKEN}}'
-    cmds:
-      - scorecard --repo={{.GITHUB_REPO}}

@@ -2,12 +2,12 @@
 > Case convert and verify for Python: snake_case, camelCase, kebab-case, etc.
 
 [![license](https://img.shields.io/github/license/makukha/caseutil.svg)](https://github.com/makukha/caseutil/blob/main/LICENSE)
-[![Tests](https://raw.githubusercontent.com/makukha/caseutil/0.6.4/docs/badge/tests.svg)](https://github.com/makukha/caseutil)
-[![Coverage](https://raw.githubusercontent.com/makukha/caseutil/0.6.4/docs/badge/coverage.svg)](https://github.com/makukha/caseutil)
-[](https://api.securityscorecards.dev/projects/github.com/anuraghazra/github-readme-stats/badge)
+[![Tests](https://raw.githubusercontent.com/makukha/caseutil/v0.6.5/docs/badge/tests.svg)](https://github.com/makukha/caseutil)
+[![Coverage](https://raw.githubusercontent.com/makukha/caseutil/v0.6.5/docs/badge/coverage.svg)](https://github.com/makukha/caseutil)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9342/badge)](https://www.bestpractices.dev/projects/9342) \
-[![pypi](https://img.shields.io/pypi/v/caseutil.svg#0.6.4)](https://pypi.python.org/pypi/caseutil)
-[![versions](https://img.shields.io/pypi/pyversions/caseutil.svg)](https://pypi.org/project/caseutil)
+[![pypi](https://img.shields.io/pypi/v/caseutil.svg#v0.6.5)](https://pypi.python.org/pypi/caseutil)
+[![versions](https://img.shields.io/pypi/pyversions/caseutil.svg)](https://pypi.org/project/caseutil) \
+![PyPI - Downloads](https://img.shields.io/pypi/dw/caseutil)
 
 
 ## Features
@@ -131,12 +131,12 @@ Only ASCII names are supported. Unicode support is planned.
 
 #### OS X
 
-This project requires [Homebrew](https://brew.sh). Other tools like [PDM](https://pdm-project.org), [Tox](https://tox.wiki), and even [Alacritty](https://alacritty.org), will be installed automatically.
+This project requires [Homebrew](https://brew.sh). Other tools like [PDM](https://pdm-project.org) and [Tox](https://tox.wiki) will be installed automatically.
 
 ```bash
 git clone https://github.com/makukha/caseutil.git
 cd caseutil
-brew bundle
+brew install go-task
 task init install
 ```
 
@@ -160,9 +160,9 @@ See [Contributing](.github/CONTRIBUTING.md) guidelines.
 
 ## Authors
 
-* Mchael Makukha — initial author.
+* [Michael Makukha](https://github.com/makukha)
 
 
 ## License
 
-This project is licensed under the terms of the [MIT license](LICENSE).
+[MIT License](https://github.com/makukha/caseutil/blob/main/LICENSE)
