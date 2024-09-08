@@ -61,10 +61,8 @@ distribution = true
 build = [
     "bump-my-version; python_version>='3.12'",
     "genbadge[coverage,tests]; python_version>='3.12'",
-    "typer; python_version>='3.12'",
 ]
 test = [
-    "mistletoe; python_version>='3.12'",
     "pytest; python_version>='3.12'",
     "pytest-cov; python_version>='3.12'",
 ]
