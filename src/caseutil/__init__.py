@@ -1,6 +1,7 @@
 """
 Case convert and verify for Python: snake_case, camelCase, kebab-case, and more.
 """
+
 from argparse import ArgumentParser
 from io import TextIOBase
 import re
@@ -59,7 +60,7 @@ if sys.version_info.major == 2:  # pragma: no cover
     keys = [k for k in Case.__dict__ if not k.startswith('_')]  # pragma: no cover
     CASES = tuple(Case.__dict__[k] for k in keys)  # pragma: no cover
 else:
-    CASES = tuple(c.value for c in Case.__members__)  # type: ignore[attr-defined]
+    CASES = tuple(c.value for c in Case.__members__.values())  # type: ignore[attr-defined]
 
 
 # case patterns
@@ -189,6 +190,7 @@ def to_upper(text: str) -> str:
 
 
 def is_case(case: Case | str, text: str) -> bool:
+    case = getattr(case, 'value', case)
     try:
         return {
             'camel': is_camel,
@@ -200,11 +202,12 @@ def is_case(case: Case | str, text: str) -> bool:
             'title': is_title,
             'upper': is_upper,
         }[str(case)](text)
-    except IndexError:
+    except KeyError:
         raise ValueError(f'Unsupported case: {case}')
 
 
 def to_case(case: Case | str, text: str) -> str:
+    case = getattr(case, 'value', case)
     try:
         return {
             'camel': to_camel,
@@ -216,7 +219,7 @@ def to_case(case: Case | str, text: str) -> str:
             'title': to_title,
             'upper': to_upper,
         }[str(case)](text)
-    except IndexError:
+    except KeyError:
         raise ValueError(f'Unsupported case: {case}')
 
 
