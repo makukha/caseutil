@@ -97,7 +97,7 @@ tasks:
 
   test:
     desc: Run tests.
-    deps: [install, build]
+    deps: [install, build, lint]
     cmds:
       - tox run
 
