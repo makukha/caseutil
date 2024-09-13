@@ -4,6 +4,11 @@ repo_url: https://github.com/makukha/caseutil
 repo_name: makukha/caseutil
 plugins:
   - search
+nav:
+  - Get Started: index.md
+  - API Reference: api.md
+  - CLI Reference: cli.md
+  - Contributing: contribute.md
 theme:
   name: material
   features:
@@ -40,6 +45,3 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
-nav:
-  - Get Started: index.md
-  - API Reference: api.md

@@ -83,5 +83,6 @@ current_version = "0.6.5"
 files = [
   {filename = "src/caseutil/__version__.py"},
   {filename = "README.md"},
+  {filename = "docs/index.md"},
 ]
 allow_dirty = true

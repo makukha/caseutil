@@ -7,7 +7,7 @@
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9342/badge)](https://www.bestpractices.dev/projects/9342) \
 [![pypi](https://img.shields.io/pypi/v/caseutil.svg#v0.6.5)](https://pypi.python.org/pypi/caseutil)
 [![versions](https://img.shields.io/pypi/pyversions/caseutil.svg)](https://pypi.org/project/caseutil) \
-![PyPI - Downloads](https://img.shields.io/pypi/dw/caseutil)
+[![PyPI - Downloads](https://img.shields.io/pypi/dw/caseutil)](https://pypistats.org/packages/caseutil)
 
 
 ## Features
