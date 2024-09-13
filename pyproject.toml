@@ -62,6 +62,10 @@ build = [
     "bump-my-version; python_version>='3.12'",
     "genbadge[coverage,tests]; python_version>='3.12'",
 ]
+docs = [
+    "mkdocs; python_version>='3.12'",
+    "mkdocs-material; python_version>='3.12'",
+]
 test = [
     "pytest; python_version>='3.12'",
     "pytest-cov; python_version>='3.12'",
