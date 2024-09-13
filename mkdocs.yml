@@ -1,0 +1,8 @@
+site_name: caseutil
+site_url: https://caseutil.readthedocs.io
+repo_url: https://github.com/makukha/caseutil
+theme:
+  name: material
+nav:
+  - Get Started: index.md
+  - API Reference: api.md
