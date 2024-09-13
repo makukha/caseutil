@@ -69,15 +69,22 @@ tasks:
   build:
     desc: Build all.
     cmds:
+      - task: build:docs-requirements
       - task: build:test-readme
 
-  build:test-readme:
+  # docs
+
+  build:docs-requirements:
     internal: true
-    sources: [README.md]
-    generates: [tests/test_readme.txt]
+    sources: [pyproject.toml]
+    generates: [docs/requirements.txt]
     cmds:
-      - sed -ne '/^```doctest/,/^```/{/^```doctest/d; s/^```//; p;}' README.md
-          > tests/test_readme.txt
+      - pdm export --dev --group docs --no-hashes > docs/requirements.txt
+
+  run:docs:
+    desc: Serve local MkDocs
+    cmds:
+      - mkdocs serve
 
   # lint, format
 
@@ -94,6 +101,14 @@ tasks:
       - ruff format
 
   # test
+
+  build:test-readme:
+    internal: true
+    sources: [README.md]
+    generates: [tests/test_readme.txt]
+    cmds:
+      - sed -ne '/^```doctest/,/^```/{/^```doctest/d; s/^```//; p;}' README.md
+          > tests/test_readme.txt
 
   test:
     desc: Run tests.

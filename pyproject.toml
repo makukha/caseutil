@@ -43,6 +43,7 @@ dependencies = []
 caseutil = "caseutil:main"
 
 [project.urls]
+Documentation = "https://caseutil.readthedocs.io"
 Repository = "https://github.com/makukha/caseutil"
 Issues = "https://github.com/makukha/caseutil/issues"
 Changelog = "https://github.com/makukha/caseutil/releases"
@@ -62,6 +63,10 @@ build = [
     "bump-my-version; python_version>='3.12'",
     "genbadge[coverage,tests]; python_version>='3.12'",
 ]
+docs = [
+    "mkdocs; python_version>='3.12'",
+    "mkdocs-material; python_version>='3.12'",
+]
 test = [
     "pytest; python_version>='3.12'",
     "pytest-cov; python_version>='3.12'",
@@ -79,5 +84,6 @@ current_version = "0.6.5"
 files = [
   {filename = "src/caseutil/__version__.py"},
   {filename = "README.md"},
+  {filename = "docs/index.md"},
 ]
 allow_dirty = true
