@@ -43,6 +43,7 @@ dependencies = []
 caseutil = "caseutil:main"
 
 [project.urls]
+Documentation = "https://caseutil.readthedocs.io"
 Repository = "https://github.com/makukha/caseutil"
 Issues = "https://github.com/makukha/caseutil/issues"
 Changelog = "https://github.com/makukha/caseutil/releases"
