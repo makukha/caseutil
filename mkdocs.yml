@@ -1,8 +1,45 @@
 site_name: caseutil
 site_url: https://caseutil.readthedocs.io
 repo_url: https://github.com/makukha/caseutil
+repo_name: makukha/caseutil
+plugins:
+  - search
 theme:
   name: material
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.tracking
+    - search.highlight
+    - search.suggest
+    - toc.integrate
+  font:
+    text: Roboto
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    # auto
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # light
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: light green
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # dark
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: green
+      accent: orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
 nav:
   - Get Started: index.md
   - API Reference: api.md
