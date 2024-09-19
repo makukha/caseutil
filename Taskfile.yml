@@ -82,7 +82,7 @@ tasks:
       - pdm export --dev --group docs --no-hashes > docs/requirements.txt
 
   run:docs:
-    desc: Serve local MkDocs
+    desc: Serve local MkDocs.
     cmds:
       - mkdocs serve
 

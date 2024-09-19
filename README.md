@@ -1,14 +1,14 @@
 # caseutil ⇄ 🐍🐫🍢
 > Case convert and verify for Python: snake_case, camelCase, kebab-case, etc.
 
-[![license](https://img.shields.io/github/license/makukha/caseutil.svg)](https://github.com/makukha/caseutil/blob/main/LICENSE)
+[![versions](https://img.shields.io/pypi/pyversions/caseutil.svg)](https://pypi.org/project/caseutil)  
+[![pypi](https://img.shields.io/pypi/v/caseutil.svg#v0.6.5)](https://pypi.python.org/pypi/caseutil)
 [![Tests](https://raw.githubusercontent.com/makukha/caseutil/v0.6.5/docs/badge/tests.svg)](https://github.com/makukha/caseutil)
 [![Coverage](https://raw.githubusercontent.com/makukha/caseutil/v0.6.5/docs/badge/coverage.svg)](https://github.com/makukha/caseutil)
-[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9342/badge)](https://www.bestpractices.dev/projects/9342) \
-[![pypi](https://img.shields.io/pypi/v/caseutil.svg#v0.6.5)](https://pypi.python.org/pypi/caseutil)
-[![versions](https://img.shields.io/pypi/pyversions/caseutil.svg)](https://pypi.org/project/caseutil) \
-[![PyPI - Downloads](https://img.shields.io/pypi/dw/caseutil)](https://pypistats.org/packages/caseutil)
+[![PyPI - Downloads](https://img.shields.io/pypi/dw/caseutil)](https://pypistats.org/packages/caseutil)  
+[![license](https://img.shields.io/github/license/makukha/caseutil.svg)](https://github.com/makukha/caseutil/blob/main/LICENSE)
 [![Documentation Status](https://readthedocs.org/projects/caseutil/badge/?version=latest)](https://caseutil.readthedocs.io/en/latest/?badge=latest)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9342/badge)](https://www.bestpractices.dev/projects/9342)
 
 
 
