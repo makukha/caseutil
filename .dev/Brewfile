@@ -1,5 +1,0 @@
-brew "mypy"
-brew "pdm"
-brew "pyenv"
-brew "ruff"
-brew "tox"

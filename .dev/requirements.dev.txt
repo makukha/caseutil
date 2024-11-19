@@ -1,0 +1,9 @@
+# static
+mypy
+ruff
+# tests
+genbadge[coverage,tests]
+tox
+virtualenv-pyenv
+# release
+bump-my-version

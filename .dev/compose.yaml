@@ -1,0 +1,14 @@
+services:
+  dev:
+    build:
+      context: ..
+      dockerfile: .dev/Dockerfile
+      target: dev
+    hostname: caseutil
+    command: bash -c 'task --list; bash -i'
+    stdin_open: true
+    tty: true
+    ports:
+      - '8000:8000'
+    volumes:
+      - ..:/project

@@ -234,10 +234,9 @@ parser.add_argument('text', default=sys.stdin, nargs='?')
 
 def main() -> None:
     args = parser.parse_args()
-    lines = (
-        args.text.readlines()
-        if isinstance(args.text, TextIOBase)
-        else args.text.splitlines()
-    )
+    if isinstance(args.text, TextIOBase):
+        lines = args.text.readlines()
+    else:
+        lines = args.text.splitlines()
     values = [to_case(args.c, line) for line in lines]
     print(*values, sep='\n')
