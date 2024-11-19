@@ -1,97 +1,41 @@
 version: '3'
 
-vars:
-  GITHUB_REPO: makukha/caseutil
-  GET_PYTHON_VERSIONS: tox --listenvs | sed -e 's/^py//' | xargs echo
+env:
+  COMPOSE_FILE: .dev/compose.yaml
 
 tasks:
 
-  # init
+  # dev environment
 
-  init:
-    desc: Initialize dev environment.
+  dev:
+    desc: Enter dev container.
     cmds:
-      - task: init:homebrew
-      - task: init:python
-      - task: init:python-env
+      - task: dev:build
+      - docker compose run --service-ports --rm dev
 
-  init:homebrew:
-    internal: true
-    dir: .dev
-    sources: [Brewfile]
-    env:
-      HOMEBREW_BUNDLE_NO_LOCK: 1
-    cmds:
-      - brew bundle
-
-  init:python:
+  dev:build:
     internal: true
     sources:
-      - tox.ini
-    vars:
-      PYTHON_VERSIONS:
-        sh: tox --listenvs | sed -ne 's/^py\([23]\)\.\{0,1\}\([0-9].*\)/\1.\2/p' | sort -mu | tr '\n' ' '
+      - .dev/*
     cmds:
-      - cmd: pyenv install --skip-existing {{.ITEM}}
-        for: {var: PYTHON_VERSIONS}
+      - docker compose build
 
-  init:python-env:
-    internal: true
-    status:
-      - test -e .venv
-    cmds:
-      - pyenv install --skip-existing $(pyenv local)
-      - pdm venv create $(pyenv prefix $(pyenv local))
-
-  # install
+  # dev commands
 
   install:
-    desc: Install dev environment.
+    desc: Install package system-wide.
     cmds:
-      - task: install:python-dependencies
-      - task: install:python-package
+      - uv pip install --system -e .
 
-  install:python-dependencies:
-    internal: true
-    sources: [pyproject.toml]
-    cmds:
-      - pdm lock --update-reuse
-      - pdm install --check --dev --no-self
-
-  install:python-package:
-    internal: true
-    sources: [src/**/*.*]
-    cmds:
-      - pdm install --check --dev
-
-  # build
-
-  build:
-    desc: Build all.
-    cmds:
-      - task: build:docs-requirements
-      - task: build:test-readme
-
-  # docs
-
-  build:docs-requirements:
-    internal: true
-    sources: [pyproject.toml]
-    generates: [docs/requirements.txt]
-    cmds:
-      - pdm export --dev --group docs --no-hashes > docs/requirements.txt
-
-  run:docs:
-    desc: Serve local MkDocs
+  docs:
+    desc: Serve local MkDocs.
     cmds:
       - mkdocs serve
-
-  # lint, format
 
   lint:
     desc: Run linters.
     cmds:
-      - pdm run mypy src
+      - mypy src
       - ruff check
       - ruff format --check
 
@@ -100,44 +44,35 @@ tasks:
     cmds:
       - ruff format
 
-  # test
-
-  build:test-readme:
-    internal: true
-    sources: [README.md]
-    generates: [tests/test_readme.txt]
-    cmds:
-      - sed -ne '/^```doctest/,/^```/{/^```doctest/d; s/^```//; p;}' README.md
-          > tests/test_readme.txt
-
-  test:
-    desc: Run tests.
-    deps: [install, build, lint]
-    cmds:
-      - tox run
-
-  test:main:
-    desc: Run tests in main environment.
-    deps: [install, build]
-    cmds:
-      - tox run -m main
-
-  test:debug:
-    desc: Run tests and open debugger on errors.
-    deps: [install, build]
-    cmds:
-      - pdm run pytest --pdb {{.CLI_ARGS}}
-
-  # version, publish
-
   version:
     desc: Bump project version. Use task version -- patch|minor|major|...
     cmds:
-      - pdm run bump-my-version bump {{.CLI_ARGS}}
+      - bump-my-version bump {{.CLI_ARGS}}
 
   publish:
     desc: Publish package on PyPi.
     preconditions:
       - test $(git rev-parse --abbrev-ref HEAD) = main
     cmds:
-      - pdm publish
+      - uv build --no-sources
+      - uv publish
+
+  # dev testing
+
+  test:
+    desc: Run tests.
+    deps: [lint, install]
+    cmds:
+      - tox run
+
+  test:main:
+    desc: Run tests in main environment.
+    deps: [install]
+    cmds:
+      - tox run -m main
+
+  test:debug:
+    desc: Run tests and open debugger on errors.
+    deps: [install]
+    cmds:
+      - pytest --pdb {{.CLI_ARGS}}
