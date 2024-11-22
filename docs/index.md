@@ -23,16 +23,16 @@
 
 ### Supported cases
 
-| Case        | Example          | Functions                |
-|-------------|------------------|--------------------------|
-| snake_case  | my_variable_name | `is_snake`, `to_snake`   |
-| CONST_CASE  | MY_VARIABLE_NAME | `is_const`, `to_const`   |
-| camelCase   | myVariableName   | `is_camel`, `to_camel`   |
-| PascalCase  | MyVariableName   | `is_pascal`, `to_pascal` |
-| kebab-case  | my-variable-name | `is_kebab`, `to_kebab`   |
-| lower space | my variable name | `is_lower`, `to_lower`   |
-| UPPER SPACE | MY VARIABLE NAME | `is_upper`, `to_upper`   |
-| Title Space | My Variable Name | `is_title`, `to_title`   |
+| Case       | Example          | Functions                |
+|------------|------------------|--------------------------|
+| snake_case | my_variable_name | `is_snake`, `to_snake`   |
+| CONST_CASE | MY_VARIABLE_NAME | `is_const`, `to_const`   |
+| camelCase  | myVariableName   | `is_camel`, `to_camel`   |
+| PascalCase | MyVariableName   | `is_pascal`, `to_pascal` |
+| kebab-case | my-variable-name | `is_kebab`, `to_kebab`   |
+| lower case | my variable name | `is_lower`, `to_lower`   |
+| UPPER CASE | MY VARIABLE NAME | `is_upper`, `to_upper`   |
+| Title Case | My Variable Name | `is_title`, `to_title`   |
 
 
 ## Getting Started
