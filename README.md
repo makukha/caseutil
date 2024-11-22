@@ -11,12 +11,11 @@
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9342/badge)](https://www.bestpractices.dev/projects/9342)
 
 
-
 ## Features
 
 * Verify and convert between most popular cases
-* Custom separators: `'my.variable.name'`, `'my/variable/name'`
-* Command line mode: `caseutil`
+* Custom separators: `'foo.bar.baz'`, `'foo/bar/baz'`
+* Command line utility `caseutil`
 * Pure Python 2.7 to 3.14+
 * No dependencies
 * 100% test coverage
@@ -24,71 +23,60 @@
 
 ### Supported cases
 
-| Case       | Example          | Functions                |
-|------------|------------------|--------------------------|
-| snake_case | my_variable_name | `is_snake`, `to_snake`   |
-| CONST_CASE | MY_VARIABLE_NAME | `is_const`, `to_const`   |
-| camelCase  | myVariableName   | `is_camel`, `to_camel`   |
-| PascalCase | MyVariableName   | `is_pascal`, `to_pascal` |
-| kebab-case | my-variable-name | `is_kebab`, `to_kebab`   |
-| lower case | my variable name | `is_lower`, `to_lower`   |
-| UPPER CASE | MY VARIABLE NAME | `is_upper`, `to_upper`   |
-| Title Case | My Variable Name | `is_title`, `to_title`   |
+| Case       | Functions                |
+|------------|--------------------------|
+| snake_case | `is_snake`, `to_snake`   |
+| CONST_CASE | `is_const`, `to_const`   |
+| camelCase  | `is_camel`, `to_camel`   |
+| PascalCase | `is_pascal`, `to_pascal` |
+| kebab-case | `is_kebab`, `to_kebab`   |
+| lower case | `is_lower`, `to_lower`   |
+| UPPER CASE | `is_upper`, `to_upper`   |
+| Title Case | `is_title`, `to_title`   |
 
 
-## Getting Started
+## Installation
 
-### Installing
-
-```bash
+```shell
 $ pip install caseutil
 ```
 
-### Use as a library
+## Simple usage
 
 ```doctest
 >>> from caseutil import *
-```
 
-Verify case format:
-```doctest
->>> is_snake('My variable-name')
+>>> is_snake('Foo bar-baz')
 False
+
+>>> to_snake('Foo bar-baz')
+'foo_bar_baz'
 ```
 
-Convert to case:
-```doctest
->>> to_snake('My variable-name')
-'my_variable_name'
-```
+## Command line
 
-### Use as a CLI command
-
-Note the support of multiple values in argument or stdin:
-
-```bash
+```shell
 $ caseutil -c const "hi there"
 HI_THERE
+```
 
+Invoke as Python module:
+```shell
+$ python -m caseutil -c const "hi there"
+HI_THERE
+```
+
+When reading from stdin, each line is processed separately:
+```shell
 $ echo "hi_there\nsee you" | python -m caseutil -c camel
 hiThere
 seeYou
 ```
 
 
-## Advanced
+## Advanced usage
 
-### Universal functions
-
-Use functions `is_case()` and `to_case()` to deal with arbitrary case:
-```doctest
->>> is_case('camel', 'myVariableName')
-True
->>> to_case(Case.CONST, 'myVariableName')
-'MY_VARIABLE_NAME'
-```
-
-### Case enum
+### Cases enum
 
 All supported cases are gathered in `Case` enum:
 ```python
@@ -103,6 +91,28 @@ class Case(StrEnum):
     UPPER = 'upper'
 ```
 
+### Universal verification and conversion
+
+Use functions `is_case()` and `to_case()` to deal with any supported case:
+
+```doctest
+>>> is_case(Case.CAMEL, 'myVariableName')
+True
+>>> to_case(Case.CONST, 'myVariableName')
+'MY_VARIABLE_NAME'
+```
+
+### Custom separators
+
+Use `words()` function:
+
+```doctest
+>>> '/'.join(words(to_lower('myVariableName')))
+'my/variable/name'
+>>> '.'.join(words('myVariableName'))
+'my.Variable.Name'
+```
+
 ### Tokenization
 
 Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see this example and unit tests.
@@ -112,52 +122,30 @@ Word separators are non-word characters including underscore, and places where t
 ['some', 'really', 'ME', 'Ssy', 'text', 'wit4', 'Digits', '3Very', 'Wh3re']
 ```
 
-### Custom Separators
-
-For custom separators, use `words()` function:
-```doctest
->>> '/'.join(words(to_lower('myVariableName')))
-'my/variable/name'
->>> '.'.join(words('myVariableName'))
-'my.Variable.Name'
-```
-
 ### Unicode support
 
 Only ASCII names are supported. Unicode support is planned.
 
 
-## Developing
+## Development
 
-### Development environment
+This project requires [Docker](https://www.docker.com).
 
-#### OS X
-
-This project requires [Homebrew](https://brew.sh). Other tools like [PDM](https://pdm-project.org) and [Tox](https://tox.wiki) will be installed automatically.
-
-```bash
+```shell
 git clone https://github.com/makukha/caseutil.git
 cd caseutil
-brew install go-task
-task init install
+task dev
 ```
 
-### Testing
-
-```bash
-task test
+```shell
+root@caseutil:/project# task lint
+root@caseutil:/project# task format
+root@caseutil:/project# task test
 ```
 
-### Contributing
+## Contributing
 
 See [Contributing](.github/CONTRIBUTING.md) guidelines.
-
-
-### Roadmap
-
-* Add more test, explore edge cases
-* Add Unicode support (write tests)
-* Add more cases
 
 
 ## Authors

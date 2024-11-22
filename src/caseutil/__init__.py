@@ -88,14 +88,14 @@ RX_CASE_SEP2 = re.compile(r'(?P<pre>[A-Z][0-9]*)(?P<post>[A-Z][0-9]*[a-z])')
 
 
 def tokenize(text: str) -> str:
-    values = RX_SIMPLE_SEP.sub(',', text)
-    values = RX_CASE_SEP1.sub(r'\g<pre>,\g<post>', values)
-    values = RX_CASE_SEP2.sub(r'\g<pre>,\g<post>', values)
-    return values.strip(',')
+    values = RX_SIMPLE_SEP.sub(' ', text)
+    values = RX_CASE_SEP1.sub(r'\g<pre> \g<post>', values)
+    values = RX_CASE_SEP2.sub(r'\g<pre> \g<post>', values)
+    return values.strip()
 
 
 def words(text: str) -> List[str]:
-    return tokenize(text).split(',')
+    return tokenize(text).split()
 
 
 # const case
@@ -106,7 +106,7 @@ def is_const(text: str) -> bool:
 
 
 def to_const(text: str) -> str:
-    return tokenize(text).upper().replace(',', '_')
+    return tokenize(text).upper().replace(' ', '_')
 
 
 # camel case
@@ -118,6 +118,8 @@ def is_camel(text: str) -> bool:
 
 def to_camel(text: str) -> str:
     wrds = words(text)
+    if not wrds:
+        return ''
     return ''.join([wrds[0].lower(), *(w.title() for w in wrds[1:])])
 
 
@@ -129,7 +131,7 @@ def is_kebab(text: str) -> bool:
 
 
 def to_kebab(text: str) -> str:
-    return tokenize(text).lower().replace(',', '-')
+    return tokenize(text).lower().replace(' ', '-')
 
 
 # lower case
@@ -140,7 +142,7 @@ def is_lower(text: str) -> bool:
 
 
 def to_lower(text: str) -> str:
-    return tokenize(text).lower().replace(',', ' ')
+    return tokenize(text).lower().replace(' ', ' ')
 
 
 # pascal case
@@ -162,7 +164,7 @@ def is_snake(text: str) -> bool:
 
 
 def to_snake(text: str) -> str:
-    return tokenize(text).lower().replace(',', '_')
+    return tokenize(text).lower().replace(' ', '_')
 
 
 # title case
@@ -184,7 +186,7 @@ def is_upper(text: str) -> bool:
 
 
 def to_upper(text: str) -> str:
-    return tokenize(text).upper().replace(',', ' ')
+    return tokenize(text).upper().replace(' ', ' ')
 
 
 # universal functions
