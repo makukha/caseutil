@@ -11,21 +11,31 @@ from typing import List, Union
 from .__version__ import __version__
 
 __all__ = [
+    # verify
+    'is_ada',
     'is_camel',
+    'is_cobol',
     'is_const',
     'is_kebab',
     'is_lower',
     'is_pascal',
+    'is_sentence',
     'is_snake',
     'is_title',
+    'is_train',
     'is_upper',
+    # convert
+    'to_ada',
     'to_camel',
+    'to_cobol',
     'to_const',
     'to_kebab',
     'to_lower',
     'to_pascal',
+    'to_sentence',
     'to_snake',
     'to_title',
+    'to_train',
     'to_upper',
     # universal
     'Case',
@@ -47,13 +57,17 @@ else:
 
 
 class Case(_Case):
+    ADA = 'ada'
     CAMEL = 'camel'
+    COBOL = 'cobol'
     CONST = 'const'
     KEBAB = 'kebab'
     LOWER = 'lower'
     PASCAL = 'pascal'
+    SENTENCE = 'sentence'
     SNAKE = 'snake'
     TITLE = 'title'
+    TRAIN = 'train'
     UPPER = 'upper'
 
 
@@ -70,13 +84,17 @@ UPPER = r'(?:[A-Z0-9]+)'
 LOWER = r'(?:[a-z0-9]+)'
 TITLE = rf'(?:[0-9]*[A-Z]{LOWER}?)'
 
+RX_ADA = re.compile(f'{TITLE}(_{TITLE})*')
 RX_CAMEL = re.compile(f'{LOWER}{TITLE}*')
+RX_COBOL = re.compile(f'{UPPER}(-{UPPER})*')
 RX_CONST = re.compile(f'{UPPER}(_{UPPER})*')
 RX_KEBAB = re.compile(f'{LOWER}(-{LOWER})*')
 RX_LOWER = re.compile(f'{LOWER}( {LOWER})*')
 RX_PASCAL = re.compile(f'{TITLE}+')
+RX_SENTENCE = re.compile(f'{TITLE}( {LOWER})*')
 RX_SNAKE = re.compile(f'{LOWER}(_{LOWER})*')
 RX_TITLE = re.compile(f'{TITLE}( {TITLE})*')
+RX_TRAIN = re.compile(f'{TITLE}(-{TITLE})*')
 RX_UPPER = re.compile(f'{UPPER}( {UPPER})*')
 
 
@@ -88,25 +106,26 @@ RX_CASE_SEP2 = re.compile(r'(?P<pre>[A-Z][0-9]*)(?P<post>[A-Z][0-9]*[a-z])')
 
 
 def tokenize(text: str) -> str:
-    values = RX_SIMPLE_SEP.sub(',', text)
-    values = RX_CASE_SEP1.sub(r'\g<pre>,\g<post>', values)
-    values = RX_CASE_SEP2.sub(r'\g<pre>,\g<post>', values)
-    return values.strip(',')
+    values = RX_SIMPLE_SEP.sub(' ', text)
+    values = RX_CASE_SEP1.sub(r'\g<pre> \g<post>', values)
+    values = RX_CASE_SEP2.sub(r'\g<pre> \g<post>', values)
+    return values.strip()
 
 
 def words(text: str) -> List[str]:
-    return tokenize(text).split(',')
+    return tokenize(text).split()
 
 
-# const case
+# ada case
 
 
-def is_const(text: str) -> bool:
-    return True if RX_CONST.fullmatch(text) else False
+def is_ada(text: str) -> bool:
+    return True if RX_ADA.fullmatch(text) else False
 
 
-def to_const(text: str) -> str:
-    return tokenize(text).upper().replace(',', '_')
+def to_ada(text: str) -> str:
+    wrds = words(text)
+    return '_'.join(w.title() for w in wrds)
 
 
 # camel case
@@ -118,7 +137,31 @@ def is_camel(text: str) -> bool:
 
 def to_camel(text: str) -> str:
     wrds = words(text)
+    if not wrds:
+        return ''
     return ''.join([wrds[0].lower(), *(w.title() for w in wrds[1:])])
+
+
+# cobol case
+
+
+def is_cobol(text: str) -> bool:
+    return True if RX_COBOL.fullmatch(text) else False
+
+
+def to_cobol(text: str) -> str:
+    return tokenize(text).upper().replace(' ', '-')
+
+
+# const case
+
+
+def is_const(text: str) -> bool:
+    return True if RX_CONST.fullmatch(text) else False
+
+
+def to_const(text: str) -> str:
+    return tokenize(text).upper().replace(' ', '_')
 
 
 # kebab case
@@ -129,7 +172,7 @@ def is_kebab(text: str) -> bool:
 
 
 def to_kebab(text: str) -> str:
-    return tokenize(text).lower().replace(',', '-')
+    return tokenize(text).lower().replace(' ', '-')
 
 
 # lower case
@@ -140,7 +183,7 @@ def is_lower(text: str) -> bool:
 
 
 def to_lower(text: str) -> str:
-    return tokenize(text).lower().replace(',', ' ')
+    return tokenize(text).lower().replace(' ', ' ')
 
 
 # pascal case
@@ -154,6 +197,20 @@ def to_pascal(text: str) -> str:
     return ''.join(w.title() for w in words(text))
 
 
+# sentence case
+
+
+def is_sentence(text: str) -> bool:
+    return True if RX_SENTENCE.fullmatch(text) else False
+
+
+def to_sentence(text: str) -> str:
+    wrds = words(text)
+    if not wrds:
+        return ''
+    return ' '.join([wrds[0].title(), *(w.lower() for w in wrds[1:])])
+
+
 # snake case
 
 
@@ -162,7 +219,7 @@ def is_snake(text: str) -> bool:
 
 
 def to_snake(text: str) -> str:
-    return tokenize(text).lower().replace(',', '_')
+    return tokenize(text).lower().replace(' ', '_')
 
 
 # title case
@@ -176,6 +233,18 @@ def to_title(text: str) -> str:
     return ' '.join(w.title() for w in words(text))
 
 
+# train case
+
+
+def is_train(text: str) -> bool:
+    return True if RX_TRAIN.fullmatch(text) else False
+
+
+def to_train(text: str) -> str:
+    wrds = words(text)
+    return '-'.join(w.title() for w in wrds)
+
+
 # upper case
 
 
@@ -184,7 +253,7 @@ def is_upper(text: str) -> bool:
 
 
 def to_upper(text: str) -> str:
-    return tokenize(text).upper().replace(',', ' ')
+    return tokenize(text).upper().replace(' ', ' ')
 
 
 # universal functions
@@ -194,13 +263,17 @@ def is_case(case: Union[Case, str], text: str) -> bool:
     case = getattr(case, 'value', case)
     try:
         return {
+            'ada': is_ada,
             'camel': is_camel,
+            'cobol': is_cobol,
             'const': is_const,
             'kebab': is_kebab,
             'lower': is_lower,
             'pascal': is_pascal,
+            'sentence': is_sentence,
             'snake': is_snake,
             'title': is_title,
+            'train': is_train,
             'upper': is_upper,
         }[str(case)](text)
     except KeyError:
@@ -211,13 +284,17 @@ def to_case(case: Union[Case, str], text: str) -> str:
     case = getattr(case, 'value', case)
     try:
         return {
+            'ada': to_ada,
             'camel': to_camel,
+            'cobol': to_cobol,
             'const': to_const,
             'kebab': to_kebab,
             'lower': to_lower,
             'pascal': to_pascal,
+            'sentence': to_sentence,
             'snake': to_snake,
             'title': to_title,
+            'train': to_train,
             'upper': to_upper,
         }[str(case)](text)
     except KeyError:

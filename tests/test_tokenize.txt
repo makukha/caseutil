@@ -1,56 +1,36 @@
 >>> from caseutil import tokenize
 
-Text is tokenized as a comma separated list of words, preserving case.
+>>> tokenize('Space-separated,phrase')
+'Space separated phrase'
 
-    >>> tokenize('Space separated phrase')
-    'Space,separated,phrase'
+>>> tokenize('some_0_Digits111')
+'some 0 Digits111'
 
-Digit is a part of the word:
+>>> ascii = ''.join(str(chr(c)) for c in range(256))
+>>> import re
+>>> sep = '_' + re.sub(r'\w', '', ascii)
+>>> set(tokenize(f'Word1{s}Word2') for s in sep) == {'Word1 Word2'}
+True
 
-    >>> tokenize('some_0_Digits111')
-    'some,0,Digits111'
+>>> tokenize('ErrorType')
+'Error Type'
 
-All non-word characters including underscore are word separators:
+>>> tokenize('Http404Error')
+'Http404 Error'
+>>> tokenize('Http404error')
+'Http404error'
 
-    >>> ascii = ''.join(str(chr(c)) for c in range(256))
-    >>> import re
-    >>> sep = '_' + re.sub(r'\w', '', ascii)
-    >>> set(tokenize(f'Word1{s}Word2') for s in sep) == {'Word1,Word2'}
-    True
+>>> tokenize('HTTPError')
+'HTTP Error'
+>>> tokenize('HTTP2Error')
+'HTTP2 Error'
 
-When text case is changed from lower to upper, this is also a word separator, but
-case change from upper to lower is not:
+>>> tokenize('_some_name_')
+'some name'
 
-    >>> tokenize('ErrorType')
-    'Error,Type'
+>>> tokenize('some-._name')
+'some name'
 
-When case is changed from lower to upper and there are digits in between,
-separator is added after the digits:
+>>> tokenize('')
+''
 
-    >>> tokenize('Http404Error')
-    'Http404,Error'
-    >>> tokenize('Http404error')
-    'Http404error'
-
-If there are multiple upper case letters followed by a lower case, the separator is
-inserted before the last upper letter:
-
-    >>> tokenize('HTTPError')
-    'HTTP,Error'
-    >>> tokenize('HTTP2Error')
-    'HTTP2,Error'
-
-Initial and trailing separators are stripped:
-
-    >>> tokenize('_some_name_')
-    'some,name'
-
-Multiple separators are treated as one:
-
-    >>> tokenize('some-._name')
-    'some,name'
-
-Empty string remains itself:
-
-    >>> tokenize('')
-    ''

@@ -1,5 +1,5 @@
 # caseutil ⇄ 🐍🐫🍢
-> Case convert and verify for Python: snake_case, camelCase, kebab-case, etc.
+> Case conversion and verification for Python: snake_case, camelCase, kebab-case, etc.
 
 [![versions](https://img.shields.io/pypi/pyversions/caseutil.svg)](https://pypi.org/project/caseutil)  
 [![pypi](https://img.shields.io/pypi/v/caseutil.svg#v0.6.5)](https://pypi.python.org/pypi/caseutil)
@@ -10,111 +10,106 @@
 [![Documentation Status](https://readthedocs.org/projects/caseutil/badge/?version=latest)](https://caseutil.readthedocs.io/en/latest/?badge=latest)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9342/badge)](https://www.bestpractices.dev/projects/9342)
 
-
-
 ## Features
 
 * Verify and convert between most popular cases
-* Custom separators: `'my.variable.name'`, `'my/variable/name'`
-* Command line mode: `caseutil`
-* Pure Python 2.7 to 3.13+
+* Custom separators: `'foo.bar.baz'`, `'foo/bar/baz'`
+* Command line utility `caseutil`
+* Pure Python 2.7 to 3.14+
 * No dependencies
 * 100% test coverage
 
-
 ### Supported cases
 
-| Case        | Example          | Functions                |
-|-------------|------------------|--------------------------|
-| snake_case  | my_variable_name | `is_snake`, `to_snake`   |
-| CONST_CASE  | MY_VARIABLE_NAME | `is_const`, `to_const`   |
-| camelCase   | myVariableName   | `is_camel`, `to_camel`   |
-| PascalCase  | MyVariableName   | `is_pascal`, `to_pascal` |
-| kebab-case  | my-variable-name | `is_kebab`, `to_kebab`   |
-| lower space | my variable name | `is_lower`, `to_lower`   |
-| UPPER SPACE | MY VARIABLE NAME | `is_upper`, `to_upper`   |
-| Title Space | My Variable Name | `is_title`, `to_title`   |
+| Case          | Verify        | Convert       |
+|---------------|---------------|---------------|
+| snake_case    | `is_snake`    | `to_snake`    |
+| Ada_Case      | `is_ada`      | `to_ada`      |
+| CONST_CASE    | `is_const`    | `to_const`    |
+| camelCase     | `is_camel`    | `to_camel`    |
+| PascalCase    | `is_pascal`   | `to_pascal`   |
+| kebab-case    | `is_kebab`    | `to_kebab`    |
+| Train-Case    | `is_train`    | `to_train`    |
+| COBOL-CASE    | `is_cobol`    | `to_cobol`    |
+| lower case    | `is_lower`    | `to_lower`    |
+| UPPER CASE    | `is_upper`    | `to_upper`    |
+| Title Case    | `is_title`    | `to_title`    |
+| Sentence case | `is_sentence` | `to_sentence` |
 
+## Installation
 
-## Getting Started
-
-### Installing
-
-```bash
+```shell
 $ pip install caseutil
 ```
 
-### Use as a library
+## Command line
 
-```doctest
->>> from caseutil import *
-```
-
-Verify case format:
-```doctest
->>> is_snake('My variable-name')
-False
-```
-
-Convert to case:
-```doctest
->>> to_snake('My variable-name')
-'my_variable_name'
-```
-
-### Use as a CLI command
-
-Note the support of multiple values in argument or stdin:
-
-```bash
+```shell
 $ caseutil -c const "hi there"
 HI_THERE
+```
 
+Invoke as Python module:
+```shell
+$ python -m caseutil -c const "hi there"
+HI_THERE
+```
+
+When reading from stdin, each line is processed separately:
+```shell
 $ echo "hi_there\nsee you" | python -m caseutil -c camel
 hiThere
 seeYou
 ```
 
+## Simple usage
 
-## Advanced
-
-### Universal functions
-
-Use functions `is_case()` and `to_case()` to deal with arbitrary case:
 ```doctest
->>> is_case('camel', 'myVariableName')
+>>> from caseutil import *
+
+>>> is_snake('Foo bar-baz')
+False
+
+>>> to_snake('Foo bar-baz')
+'foo_bar_baz'
+```
+
+## Advanced usage
+
+### Cases enum
+
+All supported cases are gathered in `Case` enum:
+```python
+class Case(StrEnum):
+    ADA = 'ada'
+    CAMEL = 'camel'
+    COBOL = 'cobol'
+    CONST = 'const'
+    KEBAB = 'kebab'
+    LOWER = 'lower'
+    PASCAL = 'pascal'
+    SENTENCE = 'sentence'
+    SNAKE = 'snake'
+    TITLE = 'title'
+    TRAIN = 'train'
+    UPPER = 'upper'
+```
+
+### Universal operations
+
+Use functions `is_case()` and `to_case()` to deal with any supported case:
+
+```doctest
+>>> is_case(Case.CAMEL, 'myVariableName')
 True
 >>> to_case(Case.CONST, 'myVariableName')
 'MY_VARIABLE_NAME'
 ```
 
-### Case enum
+### Custom separators
 
-All supported cases are gathered in `Case` enum:
-```python
-class Case(StrEnum):
-    CAMEL = 'camel'
-    CONST = 'const'
-    KEBAB = 'kebab'
-    LOWER = 'lower'
-    PASCAL = 'pascal'
-    SNAKE = 'snake'
-    TITLE = 'title'
-    UPPER = 'upper'
-```
+Use `words()` function:
 
-### Tokenization
-
-Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see this example and unit tests.
-
-```doctest
->>> words('!some_reallyMESsy text--wit4Digits.3VeryWh3re--')
-['some', 'really', 'ME', 'Ssy', 'text', 'wit4', 'Digits', '3Very', 'Wh3re']
-```
-
-### Custom Separators
-
-For custom separators, use `words()` function:
 ```doctest
 >>> '/'.join(words(to_lower('myVariableName')))
 'my/variable/name'
@@ -122,48 +117,42 @@ For custom separators, use `words()` function:
 'my.Variable.Name'
 ```
 
+### Tokenization
+
+Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see [Tokenization rules](https://caseutil.readthedocs.io/tokenize/).
+
+```doctest
+>>> words('!some_reallyMESsy text--wit4Digits.3VeryWh3re--')
+['some', 'really', 'ME', 'Ssy', 'text', 'wit4', 'Digits', '3Very', 'Wh3re']
+```
+
 ### Unicode support
 
 Only ASCII names are supported. Unicode support is planned.
 
+## Development
 
-## Developing
+This project requires [Docker](https://www.docker.com).
 
-### Development environment
-
-#### OS X
-
-This project requires [Homebrew](https://brew.sh). Other tools like [PDM](https://pdm-project.org) and [Tox](https://tox.wiki) will be installed automatically.
-
-```bash
+```shell
 git clone https://github.com/makukha/caseutil.git
 cd caseutil
-brew install go-task
-task init install
+task dev
 ```
 
-### Testing
-
-```bash
-task test
+```shell
+root@caseutil:/project# task lint
+root@caseutil:/project# task format
+root@caseutil:/project# task test
 ```
 
-### Contributing
+## Contributing
 
 See [Contributing](.github/CONTRIBUTING.md) guidelines.
-
-
-### Roadmap
-
-* Add more test, explore edge cases
-* Add Unicode support (write tests)
-* Add more cases
-
 
 ## Authors
 
 * [Michael Makukha](https://github.com/makukha)
-
 
 ## License
 
