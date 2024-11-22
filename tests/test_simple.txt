@@ -1,9 +1,19 @@
 >>> from caseutil import *
 >>> text = 'My variable-name'
 
+>>> to_ada(text)
+'My_Variable_Name'
+>>> not is_ada(text) and is_ada(to_ada(text))
+True
+
 >>> to_camel(text)
 'myVariableName'
 >>> not is_camel(text) and is_camel(to_camel(text))
+True
+
+>>> to_cobol(text)
+'MY-VARIABLE-NAME'
+>>> not is_cobol(text) and is_cobol(to_cobol(text))
 True
 
 >>> to_const(text)
@@ -26,6 +36,11 @@ True
 >>> not is_pascal(text) and is_pascal(to_pascal(text))
 True
 
+>>> to_sentence(text)
+'My variable name'
+>>> not is_sentence(text) and is_sentence(to_sentence(text))
+True
+
 >>> to_snake(text)
 'my_variable_name'
 >>> not is_snake(text) and is_snake(to_snake(text))
@@ -34,6 +49,11 @@ True
 >>> to_title(text)
 'My Variable Name'
 >>> not is_title(text) and is_title(to_title(text))
+True
+
+>>> to_train(text)
+'My-Variable-Name'
+>>> not is_train(text) and is_train(to_train(text))
 True
 
 >>> to_upper(text)
