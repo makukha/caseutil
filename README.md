@@ -10,7 +10,6 @@
 [![Documentation Status](https://readthedocs.org/projects/caseutil/badge/?version=latest)](https://caseutil.readthedocs.io/en/latest/?badge=latest)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9342/badge)](https://www.bestpractices.dev/projects/9342)
 
-
 ## Features
 
 * Verify and convert between most popular cases
@@ -20,37 +19,23 @@
 * No dependencies
 * 100% test coverage
 
-
 ### Supported cases
 
-| Case       | Functions                |
-|------------|--------------------------|
-| snake_case | `is_snake`, `to_snake`   |
-| CONST_CASE | `is_const`, `to_const`   |
-| camelCase  | `is_camel`, `to_camel`   |
-| PascalCase | `is_pascal`, `to_pascal` |
-| kebab-case | `is_kebab`, `to_kebab`   |
-| lower case | `is_lower`, `to_lower`   |
-| UPPER CASE | `is_upper`, `to_upper`   |
-| Title Case | `is_title`, `to_title`   |
-
+| Case       | Verify      | Convert     |
+|------------|-------------|-------------|
+| snake_case | `is_snake`  | `to_snake`  |
+| CONST_CASE | `is_const`  | `to_const`  |
+| camelCase  | `is_camel`  | `to_camel`  |
+| PascalCase | `is_pascal` | `to_pascal` |
+| kebab-case | `is_kebab`  | `to_kebab`  |
+| lower case | `is_lower`  | `to_lower`  |
+| UPPER CASE | `is_upper`  | `to_upper`  |
+| Title Case | `is_title`  | `to_title`  |
 
 ## Installation
 
 ```shell
 $ pip install caseutil
-```
-
-## Simple usage
-
-```doctest
->>> from caseutil import *
-
->>> is_snake('Foo bar-baz')
-False
-
->>> to_snake('Foo bar-baz')
-'foo_bar_baz'
 ```
 
 ## Command line
@@ -73,6 +58,17 @@ hiThere
 seeYou
 ```
 
+## Simple usage
+
+```doctest
+>>> from caseutil import *
+
+>>> is_snake('Foo bar-baz')
+False
+
+>>> to_snake('Foo bar-baz')
+'foo_bar_baz'
+```
 
 ## Advanced usage
 
@@ -91,7 +87,7 @@ class Case(StrEnum):
     UPPER = 'upper'
 ```
 
-### Universal verification and conversion
+### Universal operations
 
 Use functions `is_case()` and `to_case()` to deal with any supported case:
 
@@ -115,7 +111,7 @@ Use `words()` function:
 
 ### Tokenization
 
-Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see this example and unit tests.
+Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see [Tokenization rules](https://caseutil.readthedocs.io/tokenize/).
 
 ```doctest
 >>> words('!some_reallyMESsy text--wit4Digits.3VeryWh3re--')
@@ -125,7 +121,6 @@ Word separators are non-word characters including underscore, and places where t
 ### Unicode support
 
 Only ASCII names are supported. Unicode support is planned.
-
 
 ## Development
 
@@ -147,11 +142,9 @@ root@caseutil:/project# task test
 
 See [Contributing](.github/CONTRIBUTING.md) guidelines.
 
-
 ## Authors
 
 * [Michael Makukha](https://github.com/makukha)
-
 
 ## License
 

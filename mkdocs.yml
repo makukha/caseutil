@@ -8,8 +8,9 @@ dev_addr: '0.0.0.0:8000'
 
 nav:
   - Get Started: index.md
-  - API Reference: api.md
   - CLI Reference: cli.md
+  - Tokenization rules: tokenize.md
+  - API Reference: api.md
   - Contributing: contribute.md
 
 theme:
