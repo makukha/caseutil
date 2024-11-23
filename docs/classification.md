@@ -16,10 +16,10 @@ The two properties bellow let us classify all widely used cases: *word separator
 
 ## Ambiguity
 
-It is easy to observe that when there is a single word (no separators possible), all 12 cases are reduced to 3 classes where cases match to each other:
+It is easy to observe that when there is a single word (no separators possible), all 12 cases are reduced to 3 classes:
 
-* `lower`, `camel`, `snake`, `kebab`
-* `Title`, `Pascal`, `Ada`, `Train`, `Sentence`
-* `UPPER`, `CONST`, `COBOL`
+* `lower` = `camel` = `kebab` = `snake`
+* `Title` = `Ada` = `Pascal` = `Sentence` = `Train`
+* `UPPER` = `COBOL` = `CONST`
 
 This makes case detection multivalued when there is more than one word.
