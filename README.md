@@ -14,6 +14,7 @@
 
 * Verify and convert between most popular cases
 * Custom separators: `'foo.bar.baz'`, `'foo/bar/baz'`
+* Case detection
 * Command line utility `caseutil`
 * Pure Python 2.7 to 3.14+
 * No dependencies
@@ -35,6 +36,8 @@
 | UPPER CASE    | `is_upper`    | `to_upper`    |
 | Title Case    | `is_title`    | `to_title`    |
 | Sentence case | `is_sentence` | `to_sentence` |
+
+For more details about cases and their relations, see [Cases classification](https://caseutil.readthedocs.io/classification).
 
 ## Installation
 
@@ -100,10 +103,23 @@ class Case(StrEnum):
 Use functions `is_case()` and `to_case()` to deal with any supported case:
 
 ```doctest
->>> is_case(Case.CAMEL, 'myVariableName')
+>>> is_case(Case.CAMEL, 'myVarName')
 True
->>> to_case(Case.CONST, 'myVariableName')
-'MY_VARIABLE_NAME'
+>>> to_case(Case.CONST, 'myVarName')
+'MY_VAR_NAME'
+```
+
+### Cases detection
+
+Use `get_cases()` function to determine case (or cases, if [ambiguous](https://caseutil.readthedocs.io/classification#ambiguity)):
+
+```doctest
+>>> get_cases('fooBar')
+('camel',)
+>>> get_cases('My var-name')  # mixed case
+()
+>>> get_cases('Title')
+('ada', 'pascal', 'sentence', 'title', 'train')
 ```
 
 ### Custom separators
@@ -111,15 +127,15 @@ True
 Use `words()` function:
 
 ```doctest
->>> '/'.join(words(to_lower('myVariableName')))
-'my/variable/name'
->>> '.'.join(words('myVariableName'))
-'my.Variable.Name'
+>>> '/'.join(words(to_lower('myVarName')))
+'my/var/name'
+>>> '.'.join(words('myVarName'))
+'my.Var.Name'
 ```
 
 ### Tokenization
 
-Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see [Tokenization rules](https://caseutil.readthedocs.io/tokenize/).
+Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see [Tokenization rules](https://caseutil.readthedocs.io/tokenize).
 
 ```doctest
 >>> words('!some_reallyMESsy text--wit4Digits.3VeryWh3re--')

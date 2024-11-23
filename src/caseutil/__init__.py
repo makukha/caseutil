@@ -1,5 +1,5 @@
 """
-Case convert and verify for Python: snake_case, camelCase, kebab-case, and more.
+Case conversion and verification for Python: snake_case, camelCase, kebab-case, etc.
 """
 
 from argparse import ArgumentParser
@@ -39,6 +39,7 @@ __all__ = [
     'to_upper',
     # universal
     'Case',
+    'get_cases',
     'is_case',
     'to_case',
     'words',
@@ -82,7 +83,7 @@ else:
 
 UPPER = r'(?:[A-Z0-9]+)'
 LOWER = r'(?:[a-z0-9]+)'
-TITLE = rf'(?:[0-9]*[A-Z]{LOWER}?)'
+TITLE = rf'(?:[0-9]*[A-Z]{LOWER})'
 
 RX_ADA = re.compile(f'{TITLE}(_{TITLE})*')
 RX_CAMEL = re.compile(f'{LOWER}{TITLE}*')
@@ -301,19 +302,35 @@ def to_case(case: Union[Case, str], text: str) -> str:
         raise ValueError(f'Unsupported case: {case}')
 
 
+def get_cases(text: str) -> tuple[str, ...]:
+    return tuple(c for c in CASES if is_case(c, text))
+
+
 # cli
 
 parser = ArgumentParser(prog='caseutil', description=__doc__)
 parser.add_argument('-v', '--version', action='version', version=__version__)
-parser.add_argument('-c', choices=CASES, required=True)
 parser.add_argument('text', default=sys.stdin, nargs='?')
+group = parser.add_mutually_exclusive_group(required=True)
+group.add_argument('-c', '--convert', choices=CASES)
+group.add_argument('-d', '--detect', action='store_true')
 
 
 def main() -> None:
     args = parser.parse_args()
-    if isinstance(args.text, TextIOBase):
-        lines = args.text.readlines()
-    else:
-        lines = args.text.splitlines()
-    values = [to_case(args.c, line) for line in lines]
-    print(*values, sep='\n')
+
+    def lines(source) -> str:
+        if isinstance(source, TextIOBase):
+            yield from source
+        elif isinstance(source, str):
+            yield from source.splitlines()
+        else:
+            raise TypeError('Unsupported source type')  # pragma: no cover
+
+    if args.convert:
+        for line in lines(args.text):
+            print(to_case(args.convert, line))
+    if args.detect:
+        for line in lines(args.text):
+            print(' '.join(get_cases(line)))
+    sys.exit(0)

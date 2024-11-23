@@ -1,5 +1,5 @@
 >>> from caseutil import CASES, is_case, to_case
->>> text = 'My variable-name'
+>>> text = 'My var-name'
 
 >>> from itertools import product
 >>> variants = list(product(CASES, repeat=2))
