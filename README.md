@@ -135,7 +135,7 @@ Use `words()` function:
 
 ### Tokenization
 
-Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see [Tokenization rules](https://caseutil.readthedocs.io/tokenize).
+Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see [Tokenization rules](https://caseutil.readthedocs.io/en/latest/tokenize/).
 
 ```doctest
 >>> words('!some_reallyMESsy text--wit4Digits.3VeryWh3re--')
