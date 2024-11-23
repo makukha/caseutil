@@ -111,7 +111,7 @@ True
 
 ### Cases detection
 
-Use `get_cases()` function to determine case (or cases, if [ambiguous](https://caseutil.readthedocs.io/classification#ambiguity)):
+Use `get_cases()` function to determine case (or cases, if [ambiguous](classification#ambiguity)):
 
 ```doctest
 >>> get_cases('fooBar')

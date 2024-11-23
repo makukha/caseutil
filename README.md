@@ -37,7 +37,7 @@
 | Title Case    | `is_title`    | `to_title`    |
 | Sentence case | `is_sentence` | `to_sentence` |
 
-For more details about cases and their relations, see [Cases classification](https://caseutil.readthedocs.io/classification).
+For more details about cases and their relations, see [Cases classification](https://caseutil.readthedocs.io/en/latest/classification/).
 
 ## Installation
 
@@ -111,7 +111,7 @@ True
 
 ### Cases detection
 
-Use `get_cases()` function to determine case (or cases, if [ambiguous](https://caseutil.readthedocs.io/classification#ambiguity)):
+Use `get_cases()` function to determine case (or cases, if [ambiguous](https://caseutil.readthedocs.io/en/latest/classification/#ambiguity)):
 
 ```doctest
 >>> get_cases('fooBar')
