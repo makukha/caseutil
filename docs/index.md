@@ -37,7 +37,7 @@
 | Title Case    | `is_title`    | `to_title`    |
 | Sentence case | `is_sentence` | `to_sentence` |
 
-For more details about cases and their relations, see [Cases classification](classification).
+For more details about cases and their relations, see [Cases classification](classification.md).
 
 ## Installation
 
@@ -111,7 +111,7 @@ True
 
 ### Cases detection
 
-Use `get_cases()` function to determine case (or cases, if [ambiguous](classification#ambiguity)):
+Use `get_cases()` function to determine case (or cases, if [ambiguous](classification.md#ambiguity)):
 
 ```doctest
 >>> get_cases('fooBar')
@@ -135,7 +135,7 @@ Use `words()` function:
 
 ### Tokenization
 
-Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see [Tokenization rules](tokenize).
+Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see [Tokenization rules](tokenize.md).
 
 ```doctest
 >>> words('!some_reallyMESsy text--wit4Digits.3VeryWh3re--')
