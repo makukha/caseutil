@@ -1,0 +1,26 @@
+>>> from caseutil import CASES, get_cases, to_case
+
+Multiple words:
+
+>>> sample = 'My var-name'
+>>> all(get_cases(to_case(c, sample)) == (c,) for c in CASES)
+True
+
+Single word:
+
+>>> get_cases('lower')
+('camel', 'kebab', 'lower', 'snake')
+
+>>> get_cases('Title')
+('ada', 'pascal', 'sentence', 'title', 'train')
+
+>>> get_cases('UPPER')
+('cobol', 'const', 'upper')
+
+Single character:
+
+>>> get_cases('l')
+('camel', 'kebab', 'lower', 'snake')
+
+>>> get_cases('U')
+('cobol', 'const', 'upper')
