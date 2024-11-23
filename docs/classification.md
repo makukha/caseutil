@@ -4,13 +4,13 @@ The two properties bellow let us classify all widely used cases: *word separator
 
 ## Table
 
-| Words case rule             | Underscore    | Hyphen       | Space           | Case change   |
-|-----------------------------|---------------|--------------|-----------------|---------------|
-| All `lower`                 | `snake_case`  | `kebab-case` | `lower case`    | ∅<sup>2</sup> |
-| 1st `lower`<br>rest `Title` | —<sup>1</sup> | —            | —               | `camelCase`   |
-| All `Title`                 | `Ada_Case`    | `Train-Case` | `Title Case`    | `PascalCase`  |
-| 1st `Title`<br>rest `lower` | —             | —            | `Sentence case` | ∅             |
-| All `UPPER`                 | `CONST_CASE`  | `COBOL-CASE` | `UPPER CASE`    | ∅             |
+| Words case rule          | Underscore    | Hyphen       | Space           | Case change   |
+|--------------------------|---------------|--------------|-----------------|---------------|
+| all words are `lower`    | `snake_case`  | `kebab-case` | `lower case`    | ∅<sup>2</sup> |
+| 1st `lower` rest `Title` | —<sup>1</sup> | —            | —               | `camelCase`   |
+| all words are `Title`    | `Ada_Case`    | `Train-Case` | `Title Case`    | `PascalCase`  |
+| 1st `Title` rest `lower` | —             | —            | `Sentence case` | ∅             |
+| all words are `UPPER`    | `CONST_CASE`  | `COBOL-CASE` | `UPPER CASE`    | ∅             |
 
 <sup>1</sup> not widely used, <sup>2</sup> not possible
 
