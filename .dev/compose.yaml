@@ -3,9 +3,7 @@ services:
     build:
       context: ..
       dockerfile: .dev/Dockerfile
-      target: dev
-    hostname: caseutil
-    command: bash -c 'task --list; bash -i'
+    command: bash -c 'task --list; zsh -i'
     stdin_open: true
     tty: true
     ports:

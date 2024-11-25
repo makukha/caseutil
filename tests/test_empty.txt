@@ -7,5 +7,5 @@ False
 
 Empty string is converted to empty string:
 
->>> set(to_case(c, '') for c in CASES)
-{''}
+>>> set(to_case(c, '') for c in CASES) == set([''])
+True

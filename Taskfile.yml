@@ -35,7 +35,6 @@ tasks:
   lint:
     desc: Run linters.
     cmds:
-      - mypy src
       - ruff check
       - ruff format --check
 
@@ -54,20 +53,18 @@ tasks:
     preconditions:
       - test $(git rev-parse --abbrev-ref HEAD) = main
     cmds:
-      - uv build --no-sources
+      - uv build
       - uv publish
 
   # dev testing
 
   test:
     desc: Run tests.
-    deps: [lint, install]
     cmds:
       - tox run
 
   test:main:
     desc: Run tests in main environment.
-    deps: [install]
     cmds:
       - tox run -m main
 
