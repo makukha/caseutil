@@ -3,10 +3,16 @@ Case conversion and verification for Python: snake_case, camelCase, kebab-case, 
 """
 
 from argparse import ArgumentParser
-from io import TextIOBase
 import re
 import sys
-from typing import List, Union
+
+try:
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:  # pragma: no cover
+        from typing import List, Tuple, Union  # noqa: F401
+except ImportError:  # pragma: no cover
+    pass
 
 from .__version__ import __version__
 
@@ -48,8 +54,8 @@ __all__ = [
 
 if sys.version_info.major == 2:  # pragma: no cover
 
-    class _Case:  # pragma: no cover
-        pass  # pragma: no cover
+    class _Case:
+        pass
 else:
     from enum import Enum
 
@@ -83,20 +89,22 @@ else:
 
 UPPER = r'(?:[A-Z0-9]+)'
 LOWER = r'(?:[a-z0-9]+)'
-TITLE = rf'(?:[0-9]*[A-Z]{LOWER})'
+TITLE = r'(?:[0-9]*[A-Z]' + LOWER + ')'
 
-RX_ADA = re.compile(f'{TITLE}(_{TITLE})*')
-RX_CAMEL = re.compile(f'{LOWER}{TITLE}*')
-RX_COBOL = re.compile(f'{UPPER}(-{UPPER})*')
-RX_CONST = re.compile(f'{UPPER}(_{UPPER})*')
-RX_KEBAB = re.compile(f'{LOWER}(-{LOWER})*')
-RX_LOWER = re.compile(f'{LOWER}( {LOWER})*')
-RX_PASCAL = re.compile(f'{TITLE}+')
-RX_SENTENCE = re.compile(f'{TITLE}( {LOWER})*')
-RX_SNAKE = re.compile(f'{LOWER}(_{LOWER})*')
-RX_TITLE = re.compile(f'{TITLE}( {TITLE})*')
-RX_TRAIN = re.compile(f'{TITLE}(-{TITLE})*')
-RX_UPPER = re.compile(f'{UPPER}( {UPPER})*')
+LUT = {'LOWER': LOWER, 'UPPER': UPPER, 'TITLE': TITLE}
+
+RX_ADA = re.compile('^{TITLE}(_{TITLE})*$'.format(**LUT))
+RX_CAMEL = re.compile('^{LOWER}{TITLE}*$'.format(**LUT))
+RX_COBOL = re.compile('^{UPPER}(-{UPPER})*$'.format(**LUT))
+RX_CONST = re.compile('^{UPPER}(_{UPPER})*$'.format(**LUT))
+RX_KEBAB = re.compile('^{LOWER}(-{LOWER})*$'.format(**LUT))
+RX_LOWER = re.compile('^{LOWER}( {LOWER})*$'.format(**LUT))
+RX_PASCAL = re.compile('^{TITLE}+$'.format(**LUT))
+RX_SENTENCE = re.compile('^{TITLE}( {LOWER})*$'.format(**LUT))
+RX_SNAKE = re.compile('^{LOWER}(_{LOWER})*$'.format(**LUT))
+RX_TITLE = re.compile('^{TITLE}( {TITLE})*$'.format(**LUT))
+RX_TRAIN = re.compile('^{TITLE}(-{TITLE})*$'.format(**LUT))
+RX_UPPER = re.compile('^{UPPER}( {UPPER})*$'.format(**LUT))
 
 
 # tokenizer
@@ -106,25 +114,29 @@ RX_CASE_SEP1 = re.compile(r'(?P<pre>[a-z][0-9]*)(?P<post>[A-Z])')
 RX_CASE_SEP2 = re.compile(r'(?P<pre>[A-Z][0-9]*)(?P<post>[A-Z][0-9]*[a-z])')
 
 
-def tokenize(text: str) -> str:
+def tokenize(text):
+    # type: (str) -> str
     values = RX_SIMPLE_SEP.sub(' ', text)
     values = RX_CASE_SEP1.sub(r'\g<pre> \g<post>', values)
     values = RX_CASE_SEP2.sub(r'\g<pre> \g<post>', values)
     return values.strip()
 
 
-def words(text: str) -> List[str]:
+def words(text):
+    # type: (str) -> List[str]
     return tokenize(text).split()
 
 
 # ada case
 
 
-def is_ada(text: str) -> bool:
-    return True if RX_ADA.fullmatch(text) else False
+def is_ada(text):
+    # type: (str) -> bool
+    return True if RX_ADA.match(text) else False
 
 
-def to_ada(text: str) -> str:
+def to_ada(text):
+    # type: (str) -> str
     wrds = words(text)
     return '_'.join(w.title() for w in wrds)
 
@@ -132,116 +144,136 @@ def to_ada(text: str) -> str:
 # camel case
 
 
-def is_camel(text: str) -> bool:
-    return True if RX_CAMEL.fullmatch(text) else False
+def is_camel(text):
+    # type: (str) -> bool
+    return True if RX_CAMEL.match(text) else False
 
 
-def to_camel(text: str) -> str:
+def to_camel(text):
+    # type: (str) -> str
     wrds = words(text)
     if not wrds:
         return ''
-    return ''.join([wrds[0].lower(), *(w.title() for w in wrds[1:])])
+    return ''.join([w.lower() if i == 0 else w.title() for i, w in enumerate(wrds)])
 
 
 # cobol case
 
 
-def is_cobol(text: str) -> bool:
-    return True if RX_COBOL.fullmatch(text) else False
+def is_cobol(text):
+    # type: (str) -> bool
+    return True if RX_COBOL.match(text) else False
 
 
-def to_cobol(text: str) -> str:
+def to_cobol(text):
+    # type: (str) -> str
     return tokenize(text).upper().replace(' ', '-')
 
 
 # const case
 
 
-def is_const(text: str) -> bool:
-    return True if RX_CONST.fullmatch(text) else False
+def is_const(text):
+    # type: (str) -> bool
+    return True if RX_CONST.match(text) else False
 
 
-def to_const(text: str) -> str:
+def to_const(text):
+    # type: (str) -> str
     return tokenize(text).upper().replace(' ', '_')
 
 
 # kebab case
 
 
-def is_kebab(text: str) -> bool:
-    return True if RX_KEBAB.fullmatch(text) else False
+def is_kebab(text):
+    # type: (str) -> bool
+    return True if RX_KEBAB.match(text) else False
 
 
-def to_kebab(text: str) -> str:
+def to_kebab(text):
+    # type: (str) -> str
     return tokenize(text).lower().replace(' ', '-')
 
 
 # lower case
 
 
-def is_lower(text: str) -> bool:
-    return True if RX_LOWER.fullmatch(text) else False
+def is_lower(text):
+    # type: (str) -> bool
+    return True if RX_LOWER.match(text) else False
 
 
-def to_lower(text: str) -> str:
+def to_lower(text):
+    # type: (str) -> str
     return tokenize(text).lower().replace(' ', ' ')
 
 
 # pascal case
 
 
-def is_pascal(text: str) -> bool:
-    return True if RX_PASCAL.fullmatch(text) else False
+def is_pascal(text):
+    # type: (str) -> bool
+    return True if RX_PASCAL.match(text) else False
 
 
-def to_pascal(text: str) -> str:
+def to_pascal(text):
+    # type: (str) -> str
     return ''.join(w.title() for w in words(text))
 
 
 # sentence case
 
 
-def is_sentence(text: str) -> bool:
-    return True if RX_SENTENCE.fullmatch(text) else False
+def is_sentence(text):
+    # type: (str) -> bool
+    return True if RX_SENTENCE.match(text) else False
 
 
-def to_sentence(text: str) -> str:
+def to_sentence(text):
+    # type: (str) -> str
     wrds = words(text)
     if not wrds:
         return ''
-    return ' '.join([wrds[0].title(), *(w.lower() for w in wrds[1:])])
+    return ' '.join([w.title() if i == 0 else w.lower() for i, w in enumerate(wrds)])
 
 
 # snake case
 
 
-def is_snake(text: str) -> bool:
-    return True if RX_SNAKE.fullmatch(text) else False
+def is_snake(text):
+    # type: (str) -> bool
+    return True if RX_SNAKE.match(text) else False
 
 
-def to_snake(text: str) -> str:
+def to_snake(text):
+    # type: (str) -> str
     return tokenize(text).lower().replace(' ', '_')
 
 
 # title case
 
 
-def is_title(text: str) -> bool:
-    return True if RX_TITLE.fullmatch(text) else False
+def is_title(text):
+    # type: (str) -> bool
+    return True if RX_TITLE.match(text) else False
 
 
-def to_title(text: str) -> str:
+def to_title(text):
+    # type: (str) -> str
     return ' '.join(w.title() for w in words(text))
 
 
 # train case
 
 
-def is_train(text: str) -> bool:
-    return True if RX_TRAIN.fullmatch(text) else False
+def is_train(text):
+    # type: (str) -> bool
+    return True if RX_TRAIN.match(text) else False
 
 
-def to_train(text: str) -> str:
+def to_train(text):
+    # type: (str) -> str
     wrds = words(text)
     return '-'.join(w.title() for w in wrds)
 
@@ -249,18 +281,21 @@ def to_train(text: str) -> str:
 # upper case
 
 
-def is_upper(text: str) -> bool:
-    return True if RX_UPPER.fullmatch(text) else False
+def is_upper(text):
+    # type: (str) -> bool
+    return True if RX_UPPER.match(text) else False
 
 
-def to_upper(text: str) -> str:
+def to_upper(text):
+    # type: (str) -> str
     return tokenize(text).upper().replace(' ', ' ')
 
 
 # universal functions
 
 
-def is_case(case: Union[Case, str], text: str) -> bool:
+def is_case(case, text):
+    # type: (Union[Case, str], str) -> bool
     case = getattr(case, 'value', case)
     try:
         return {
@@ -278,10 +313,11 @@ def is_case(case: Union[Case, str], text: str) -> bool:
             'upper': is_upper,
         }[str(case)](text)
     except KeyError:
-        raise ValueError(f'Unsupported case: {case}')
+        raise ValueError('Unsupported case: {}'.format(case))
 
 
-def to_case(case: Union[Case, str], text: str) -> str:
+def to_case(case, text):
+    # type: (Union[Case, str], str) -> str
     case = getattr(case, 'value', case)
     try:
         return {
@@ -299,31 +335,39 @@ def to_case(case: Union[Case, str], text: str) -> str:
             'upper': to_upper,
         }[str(case)](text)
     except KeyError:
-        raise ValueError(f'Unsupported case: {case}')
+        raise ValueError('Unsupported case: {}'.format(case))
 
 
-def get_cases(text: str) -> tuple[str, ...]:
-    return tuple(c for c in CASES if is_case(c, text))
+def get_cases(text):
+    # type: (str) -> Tuple[str, ...]
+    return tuple(sorted(c for c in CASES if is_case(c, text)))
 
 
 # cli
 
 parser = ArgumentParser(prog='caseutil', description=__doc__)
-parser.add_argument('-v', '--version', action='version', version=__version__)
 parser.add_argument('text', default=sys.stdin, nargs='?')
 group = parser.add_mutually_exclusive_group(required=True)
+group.add_argument('--version', action='store_true')
 group.add_argument('-c', '--convert', choices=CASES)
 group.add_argument('-d', '--detect', action='store_true')
 
 
-def main() -> None:
+def main():
+    # type: () -> None
     args = parser.parse_args()
 
-    def lines(source) -> str:
-        if isinstance(source, TextIOBase):
-            yield from source
+    if args.version:
+        print('caseutil ' + __version__)
+        sys.exit(0)
+
+    def lines(source):  # type: ignore[misc]
+        if hasattr(source, 'readline'):
+            for line in source:
+                yield line
         elif isinstance(source, str):
-            yield from source.splitlines()
+            for line in source.splitlines():
+                yield line
         else:
             raise TypeError('Unsupported source type')  # pragma: no cover
 

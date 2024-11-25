@@ -24,7 +24,7 @@ All non-word characters including underscore are word separators:
 >>> ascii = ''.join(str(chr(c)) for c in range(256))
 >>> import re
 >>> sep = '_' + re.sub(r'\w', '', ascii)
->>> set(tokenize(f'Word1{s}Word2') for s in sep) == {'Word1 Word2'}
+>>> set(tokenize('Word1' + s + 'Word2') for s in sep) == {'Word1 Word2'}
 True
 ```
 
