@@ -22,10 +22,10 @@
 
 ## Supported cases
 
+### [Classification](https://caseutil.readthedocs.io/en/latest/classification/)
+
 ![Cases classification](docs/img/classification-dark.svg#gh-dark-mode-only)
 ![Cases classification](docs/img/classification-light.svg#gh-light-mode-only)
-
-See [classification details](https://caseutil.readthedocs.io/en/latest/classification/).
 
 ### Simple functions
 
