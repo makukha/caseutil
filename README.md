@@ -10,7 +10,7 @@
 [![Documentation Status](https://readthedocs.org/projects/caseutil/badge/?version=latest)](https://caseutil.readthedocs.io/en/latest/?badge=latest)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9342/badge)](https://www.bestpractices.dev/projects/9342)
 
-## Features
+# Features
 
 * Verify and convert between most popular cases
 * Custom separators: `'foo.bar.baz'`, `'foo/bar/baz'`
@@ -20,7 +20,14 @@
 * No dependencies
 * 100% test coverage
 
-### Supported cases
+# Supported cases
+
+![Cases classification](docs/img/classification-dark.svg#gh-dark-mode-only)
+![Cases classification](docs/img/classification-light.svg#gh-light-mode-only)
+
+See [classification details](https://caseutil.readthedocs.io/en/latest/classification/).
+
+## Simple functions
 
 | Case          | Verify        | Convert       |
 |---------------|---------------|---------------|
@@ -37,15 +44,13 @@
 | Title Case    | `is_title`    | `to_title`    |
 | Sentence case | `is_sentence` | `to_sentence` |
 
-For more details about cases and their relations, see [Cases classification](https://caseutil.readthedocs.io/en/latest/classification/).
-
-## Installation
+# Installation
 
 ```shell
 $ pip install caseutil
 ```
 
-## Command line
+# Command line
 
 ```shell
 $ caseutil -c const "hi there"
@@ -65,7 +70,7 @@ hiThere
 seeYou
 ```
 
-## Simple usage
+# Basic usage
 
 ```doctest
 >>> from caseutil import *
@@ -77,9 +82,9 @@ False
 'foo_bar_baz'
 ```
 
-## Advanced usage
+# Advanced usage
 
-### Cases enum
+## Cases enum
 
 All supported cases are gathered in `Case` enum:
 ```python
@@ -98,7 +103,7 @@ class Case(StrEnum):
     UPPER = 'upper'
 ```
 
-### Universal operations
+## Universal operations
 
 Use functions `is_case()` and `to_case()` to deal with any supported case:
 
@@ -109,7 +114,7 @@ True
 'MY_VAR_NAME'
 ```
 
-### Cases detection
+## Cases detection
 
 Use `get_cases()` function to determine case (or cases, if [ambiguous](https://caseutil.readthedocs.io/en/latest/classification/#ambiguity)):
 
@@ -122,7 +127,7 @@ Use `get_cases()` function to determine case (or cases, if [ambiguous](https://c
 ('ada', 'pascal', 'sentence', 'title', 'train')
 ```
 
-### Custom separators
+## Custom separators
 
 Use `words()` function:
 
@@ -133,7 +138,7 @@ Use `words()` function:
 'my.Var.Name'
 ```
 
-### Tokenization
+## Tokenization
 
 Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see [Tokenization rules](https://caseutil.readthedocs.io/en/latest/tokenize/).
 
@@ -142,38 +147,41 @@ Word separators are non-word characters including underscore, and places where t
 ['some', 'really', 'ME', 'Ssy', 'text', 'wit4', 'Digits', '3Very', 'Wh3re']
 ```
 
-### Unicode support
+## Unicode support
 
 Only ASCII names are supported. Unicode support is planned.
 
-## Development
+# Development
 
 This project requires [Docker](https://www.docker.com).
 
 ```shell
-git clone https://github.com/makukha/caseutil.git
-cd caseutil
-task dev
+$ git clone https://github.com/makukha/caseutil.git
+$ cd caseutil
+$ task dev
 ```
+
+In dev environment:
 
 ```shell
-root@caseutil:/project# task lint
-root@caseutil:/project# task format
-root@caseutil:/project# task test
+$ task build
+$ task lint
+$ task format
+$ task test
 ```
 
-## Alternatives
+# Alternatives
 
 [60+ packages](https://caseutil.readthedocs.io/en/latest/alternatives/)
 
-## Contributing
+# Contributing
 
 See [Contributing](.github/CONTRIBUTING.md) guidelines.
 
-## Authors
+# Authors
 
 * [Michael Makukha](https://github.com/makukha)
 
-## License
+# License
 
 [MIT License](https://github.com/makukha/caseutil/blob/main/LICENSE)

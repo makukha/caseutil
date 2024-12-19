@@ -25,6 +25,22 @@ tasks:
     cmds:
       - uv pip install --system -e .
 
+  build:
+    desc: Build artefacts
+    cmds:
+      - task: build:classification
+
+  build:classification:
+    internal: true
+    sources: [docs/classification.md]
+    generates:
+      - docs/img/classification-dark.svg
+      - docs/img/classification-light.svg
+    cmds:
+      - sed -ne '/^```mermaid/,/^```/{/^```mermaid/d; s/^```//; p;}' docs/classification.md > /tmp/classification.mmd
+      - mmdc -p /root/puppeteer-config.json -i /tmp/classification.mmd -o docs/img/classification-dark.svg -t dark -b transparent 2>/dev/null
+      - mmdc -p /root/puppeteer-config.json -i /tmp/classification.mmd -o docs/img/classification-light.svg -t default -b transparent 2>/dev/null
+
   docs:
     desc: Serve local MkDocs.
     cmds:

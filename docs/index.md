@@ -20,7 +20,14 @@
 * No dependencies
 * 100% test coverage
 
-### Supported cases
+## Supported cases
+
+![Cases classification](img/classification-dark.svg#only-dark)
+![Cases classification](img/classification-light.svg#only-light)
+
+See [classification details](classification.md).
+
+### Simple functions
 
 | Case          | Verify        | Convert       |
 |---------------|---------------|---------------|
@@ -37,24 +44,10 @@
 | Title Case    | `is_title`    | `to_title`    |
 | Sentence case | `is_sentence` | `to_sentence` |
 
-For more details about cases and their relations, see [Cases classification](classification.md).
-
 ## Installation
 
 ```shell
 $ pip install caseutil
-```
-
-## Simple usage
-
-```doctest
->>> from caseutil import *
-
->>> is_snake('Foo bar-baz')
-False
-
->>> to_snake('Foo bar-baz')
-'foo_bar_baz'
 ```
 
 ## Command line
@@ -75,6 +68,18 @@ When reading from stdin, each line is processed separately:
 $ echo "hi_there\nsee you" | python -m caseutil -c camel
 hiThere
 seeYou
+```
+
+## Basic usage
+
+```doctest
+>>> from caseutil import *
+
+>>> is_snake('Foo bar-baz')
+False
+
+>>> to_snake('Foo bar-baz')
+'foo_bar_baz'
 ```
 
 ## Advanced usage
