@@ -15,6 +15,14 @@ nav:
   - Alternatives: alternatives.md
   - Contributing: contribute.md
 
+extra_css:
+  - https://use.fontawesome.com/releases/v6.7.0/css/all.css
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
 theme:
   name: material
   features:
