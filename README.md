@@ -164,6 +164,7 @@ $ task dev
 In dev environment:
 
 ```shell
+$ task version -- minor
 $ task build
 $ task lint
 $ task format

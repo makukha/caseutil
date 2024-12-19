@@ -29,6 +29,13 @@ tasks:
     desc: Build artefacts
     cmds:
       - task: build:classification
+      - rm -rf dist
+      - mv README.md README.md.backup
+      - sed -e'{/#gh-dark-mode-only/ d; s|(docs/\(img/.*\)#gh-light-mode-only|(https://caseutil.readthedocs.io/en/latest/\1|;}'
+          README.md.backup > README.md
+      - uv build
+      - rm README.md
+      - mv README.md.backup README.md
 
   build:classification:
     internal: true
@@ -67,8 +74,6 @@ tasks:
     preconditions:
       - test $(git rev-parse --abbrev-ref HEAD) = main
     cmds:
-      - rm -rf dist
-      - uv build
       - uv publish
 
   # dev testing
