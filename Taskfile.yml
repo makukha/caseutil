@@ -15,8 +15,6 @@ tasks:
 
   dev:build:
     internal: true
-    sources:
-      - .dev/*
     cmds:
       - docker compose build
 
