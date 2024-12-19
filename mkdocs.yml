@@ -12,6 +12,7 @@ nav:
   - Tokenization rules: tokenize.md
   - CLI Reference: cli.md
   - API Reference: api.md
+  - Alternatives: alternatives.md
   - Contributing: contribute.md
 
 theme:
