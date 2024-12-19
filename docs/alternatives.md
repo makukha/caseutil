@@ -103,11 +103,11 @@
 
 # Methodology
 
-## PyPi search
+## PyPI search
 
 * https://pypi.org/search/?o=&q=case (first 20 pages)
 
 ## TBD
 
-* PyPi Search "snake", "camel", "kebab", "pascal"
+* PyPI Search "snake", "camel", "kebab", "pascal"
 * GutHub tags search

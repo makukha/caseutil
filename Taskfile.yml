@@ -49,7 +49,7 @@ tasks:
       - bump-my-version bump {{.CLI_ARGS}}
 
   release:
-    desc: Publish package on PyPi.
+    desc: Publish package on PyPI.
     preconditions:
       - test $(git rev-parse --abbrev-ref HEAD) = main
     cmds:
