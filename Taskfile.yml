@@ -71,9 +71,8 @@ tasks:
 
   release:
     desc: Publish package on PyPI.
-    preconditions:
-      - test $(git rev-parse --abbrev-ref HEAD) = main
     cmds:
+      - task: build
       - uv publish
 
   # dev testing
