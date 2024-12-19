@@ -162,6 +162,10 @@ root@caseutil:/project# task format
 root@caseutil:/project# task test
 ```
 
+## Alternatives
+
+[60+ packages](https://caseutil.readthedocs.io/en/latest/alternatives/)
+
 ## Contributing
 
 See [Contributing](.github/CONTRIBUTING.md) guidelines.

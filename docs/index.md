@@ -162,6 +162,10 @@ root@caseutil:/project# task format
 root@caseutil:/project# task test
 ```
 
+## Alternatives
+
+[60+ packages](alternatives.md)
+
 ## Contributing
 
 See [Contributing](https://github.com/makukha/caseutil/blob/main/.github/CONTRIBUTING.md) guidelines.
