@@ -2,6 +2,7 @@ build/
 dist/
 *.egg-info
 __pycache__/
+.python-version
 .task/
 tmp/
 .tox/
