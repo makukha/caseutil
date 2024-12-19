@@ -2,9 +2,9 @@
 > Case conversion and verification for Python: snake_case, camelCase, kebab-case, etc.
 
 [![versions](https://img.shields.io/pypi/pyversions/caseutil.svg)](https://pypi.org/project/caseutil)  
-[![pypi](https://img.shields.io/pypi/v/caseutil.svg#v0.7.0)](https://pypi.python.org/pypi/caseutil)
-[![Tests](https://raw.githubusercontent.com/makukha/caseutil/v0.7.0/docs/badge/tests.svg)](https://github.com/makukha/caseutil)
-[![Coverage](https://raw.githubusercontent.com/makukha/caseutil/v0.7.0/docs/badge/coverage.svg)](https://github.com/makukha/caseutil)
+[![pypi](https://img.shields.io/pypi/v/caseutil.svg#v0.7.1)](https://pypi.python.org/pypi/caseutil)
+[![Tests](https://raw.githubusercontent.com/makukha/caseutil/v0.7.1/docs/badge/tests.svg)](https://github.com/makukha/caseutil)
+[![Coverage](https://raw.githubusercontent.com/makukha/caseutil/v0.7.1/docs/badge/coverage.svg)](https://github.com/makukha/caseutil)
 [![PyPI - Downloads](https://img.shields.io/pypi/dw/caseutil)](https://pypistats.org/packages/caseutil)  
 [![license](https://img.shields.io/github/license/makukha/caseutil.svg)](https://github.com/makukha/caseutil/blob/main/LICENSE)
 [![Documentation Status](https://readthedocs.org/projects/caseutil/badge/?version=latest)](https://caseutil.readthedocs.io/en/latest/?badge=latest)
