@@ -16,7 +16,6 @@
 * [camelcase](https://pypi.org/project/camelcase) — ???
 * [camelsnake](https://pypi.org/project/camelsnake) — [nerandell/camelsnake](https://github.com/nerandell/camelsnake)
 * [camelsplit](https://pypi.org/project/camelsplit) — [flopp/camelsplit](https://github.com/flopp/camelsplit)
-* [camelsplit](https://pypi.org/project/camelsplit) — [flopp/camelsplit](https://github.com/flopp/camelsplit)
 * [case-changer](https://pypi.org/project/case-changer) — ???, [docs](https://python-case-changer.readthedocs.io)
 * [case-convert](https://pypi.org/project/case-convert) — [olive007/case-convert](https://gitlab.com/devolive/cross-language-libraries/case-convert)
 * [case-converter](https://pypi.org/project/case-converter) — [chrisdoherty4/python-case-converter](https://github.com/chrisdoherty4/python-case-converter)
