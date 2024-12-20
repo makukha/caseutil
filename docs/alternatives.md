@@ -18,6 +18,7 @@ Plugins with case conversion functionality for projects like Django, Flake8, Fla
 * Having at least 10 stars
 * Commits during last 2 years (as of Dec 2024)
 
+
 1. [camel-converter](https://pypi.org/project/camel-converter)
     — <i class="fab fa-github"></i> [sanders41/camel-converter](https://github.com/sanders41/camel-converter)
 1. [case-converter](https://pypi.org/project/case-converter)
@@ -32,6 +33,7 @@ Plugins with case conversion functionality for projects like Django, Flake8, Fla
 #### Multipurpose
 
 * Packages where primary purpose is not case conversion
+
 
 1. [Inflector](https://pypi.org/project/Inflector)
     — <i class="fab fa-github"></i> [ixmatus/inflector](https://github.com/ixmatus/inflector)
