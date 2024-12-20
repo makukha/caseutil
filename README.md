@@ -173,7 +173,7 @@ $ task test
 
 ## Alternatives
 
-[60+ packages](https://caseutil.readthedocs.io/en/latest/alternatives/)
+[70+ packages](https://caseutil.readthedocs.io/en/latest/alternatives/)
 
 ## Contributing
 
