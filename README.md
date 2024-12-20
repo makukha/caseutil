@@ -2,9 +2,9 @@
 > Case conversion and verification for Python: snake_case, camelCase, kebab-case, etc.
 
 [![versions](https://img.shields.io/pypi/pyversions/caseutil.svg)](https://pypi.org/project/caseutil)  
-[![pypi](https://img.shields.io/pypi/v/caseutil.svg#v0.7.0)](https://pypi.python.org/pypi/caseutil)
-[![Tests](https://raw.githubusercontent.com/makukha/caseutil/v0.7.0/docs/badge/tests.svg)](https://github.com/makukha/caseutil)
-[![Coverage](https://raw.githubusercontent.com/makukha/caseutil/v0.7.0/docs/badge/coverage.svg)](https://github.com/makukha/caseutil)
+[![pypi](https://img.shields.io/pypi/v/caseutil.svg#v0.7.1)](https://pypi.python.org/pypi/caseutil)
+[![Tests](https://raw.githubusercontent.com/makukha/caseutil/v0.7.1/docs/badge/tests.svg)](https://github.com/makukha/caseutil)
+[![Coverage](https://raw.githubusercontent.com/makukha/caseutil/v0.7.1/docs/badge/coverage.svg)](https://github.com/makukha/caseutil)
 [![PyPI - Downloads](https://img.shields.io/pypi/dw/caseutil)](https://pypistats.org/packages/caseutil)  
 [![license](https://img.shields.io/github/license/makukha/caseutil.svg)](https://github.com/makukha/caseutil/blob/main/LICENSE)
 [![Documentation Status](https://readthedocs.org/projects/caseutil/badge/?version=latest)](https://caseutil.readthedocs.io/en/latest/?badge=latest)
@@ -20,7 +20,14 @@
 * No dependencies
 * 100% test coverage
 
-### Supported cases
+## Supported cases
+
+### [Classification](https://caseutil.readthedocs.io/en/latest/classification/)
+
+![Cases classification](docs/img/classification-dark.svg#gh-dark-mode-only)
+![Cases classification](docs/img/classification-light.svg#gh-light-mode-only)
+
+### Simple functions
 
 | Case          | Verify        | Convert       |
 |---------------|---------------|---------------|
@@ -36,8 +43,6 @@
 | UPPER CASE    | `is_upper`    | `to_upper`    |
 | Title Case    | `is_title`    | `to_title`    |
 | Sentence case | `is_sentence` | `to_sentence` |
-
-For more details about cases and their relations, see [Cases classification](https://caseutil.readthedocs.io/en/latest/classification/).
 
 ## Installation
 
@@ -65,7 +70,7 @@ hiThere
 seeYou
 ```
 
-## Simple usage
+## Basic usage
 
 ```doctest
 >>> from caseutil import *
@@ -151,15 +156,19 @@ Only ASCII names are supported. Unicode support is planned.
 This project requires [Docker](https://www.docker.com).
 
 ```shell
-git clone https://github.com/makukha/caseutil.git
-cd caseutil
-task dev
+$ git clone https://github.com/makukha/caseutil.git
+$ cd caseutil
+$ task dev
 ```
 
+In dev environment:
+
 ```shell
-root@caseutil:/project# task lint
-root@caseutil:/project# task format
-root@caseutil:/project# task test
+$ task version -- minor
+$ task build
+$ task lint
+$ task format
+$ task test
 ```
 
 ## Alternatives
