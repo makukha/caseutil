@@ -52,6 +52,10 @@ Repository = "https://github.com/makukha/caseutil"
 Issues = "https://github.com/makukha/caseutil/issues"
 Changelog = "https://github.com/makukha/caseutil/releases"
 
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 # bump-my-version
 
 [tool.bumpversion]
