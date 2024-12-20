@@ -3,7 +3,7 @@
 # NOTE: Keep in sync with setup.cfg
 
 name = "caseutil"
-version = "0.7.0"
+version = "0.7.1"
 description = "Case convert and verify for Python: snake_case, camelCase, kebab-case, and more."
 authors = [{name = "Michael Makukha", email = "m.makukha@gmail.com"}]
 readme = "README.md"
@@ -55,7 +55,7 @@ Changelog = "https://github.com/makukha/caseutil/releases"
 # bump-my-version
 
 [tool.bumpversion]
-current_version = "0.7.0"
+current_version = "0.7.1"
 allow_dirty = true
 files = [
   {filename = "docs/index.md"},
