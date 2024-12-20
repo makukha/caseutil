@@ -12,12 +12,7 @@ Plugins with case conversion functionality for projects like Django, Flake8, Fla
 
 ## PyPI packages
 
-### Popular
-
-* Having source code repository
-* Having at least 10 stars
-* Commits during last 2 years (as of Dec 2024)
-
+### Popular (10+ stars, commits in last 2 years)
 
 1. [camel-converter](https://pypi.org/project/camel-converter)
     — <i class="fab fa-github"></i> [sanders41/camel-converter](https://github.com/sanders41/camel-converter)
@@ -30,10 +25,7 @@ Plugins with case conversion functionality for projects like Django, Flake8, Fla
 1. [stringcase](https://pypi.org/project/stringcase)
     — <i class="fab fa-github"></i> [okunishinishi/python-stringcase](https://github.com/okunishinishi/python-stringcase)
 
-#### Multipurpose
-
-* Packages where primary purpose is not case conversion
-
+### Multipurpose (primary purpose is not case conversion)
 
 1. [Inflector](https://pypi.org/project/Inflector)
     — <i class="fab fa-github"></i> [ixmatus/inflector](https://github.com/ixmatus/inflector)
