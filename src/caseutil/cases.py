@@ -26,7 +26,11 @@ class Case(_CaseEnum):
     UPPER = 'upper'
 
 
-CASES = tuple(v for k, v in vars(Case).items() if not k.startswith('_'))
+CASES = tuple(
+    getattr(v, 'value', v)
+    for k, v in vars(Case).items()
+    if not k.startswith('_')
+)
 
 
 # case patterns
