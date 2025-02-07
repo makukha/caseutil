@@ -1,13 +1,18 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
-
-# NOTE: Keep in sync with setup.cfg
-
 name = "caseutil"
-version = "0.7.1"
 description = "Case convert and verify for Python: snake_case, camelCase, kebab-case, and more."
 authors = [{name = "Michael Makukha", email = "m.makukha@gmail.com"}]
-readme = "README.md"
 license = {text = "MIT"}
+readme = "dist/README.md"
+urls.Documentation = "https://caseutil.readthedocs.io"
+urls.Homepage = "https://github.com/makukha/caseutil"
+urls.Repository = "https://github.com/makukha/caseutil"
+urls.Issues = "https://github.com/makukha/caseutil/issues"
+urls.Changelog = "https://github.com/makukha/caseutil/blob/main/CHANGELOG.md"
 keywords = [
   "case", "convert", "case converter",
   "string case", "text case", "text case converter",
@@ -40,21 +45,26 @@ classifiers = [  # see https://pypi.org/classifiers/
   "Topic :: Utilities",
   "Typing :: Typed",
 ]
+dynamic = ["version"]
+scripts = {caseutil = "caseutil:__main__.main"}
+
 requires-python = ">=2.7,!=3.0,!=3.1,!=3.2,!=3.3,!=3.4"
 dependencies = []
 
-[project.scripts]
-caseutil = "caseutil:main"
-
-[project.urls]
-Documentation = "https://caseutil.readthedocs.io"
-Repository = "https://github.com/makukha/caseutil"
-Issues = "https://github.com/makukha/caseutil/issues"
-Changelog = "https://github.com/makukha/caseutil/releases"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+[dependency-groups]
+dev = [
+  "bump-my-version; python_version >= '3.12'",
+  "docsub>=0.8 ; python_full_version >= '3.12'",
+  "genbadge[tests,coverage]>=1.1 ; python_version >= '3.12'",
+  "mypy ; python_version >= '3.12'",
+  "pytest>=8.3 ; python_version >= '3.12'",
+  "ruff ; python_version >= '3.12'",
+  "towncrier ; python_version >= '3.12'",
+]
+docs = [
+  "mkdocs>=0.17 ; python_version >= '3.12'",
+  "mkdocs-material>=9.6 ; python_full_version >= '3.12'",
+]
 
 # bump-my-version
 
@@ -63,34 +73,51 @@ current_version = "0.7.1"
 allow_dirty = true
 files = [
   {filename = "docs/index.md"},
-  {filename = "pyproject.toml"},
-  {filename = "README.md"},
-  {filename = "setup.cfg"},
-  {filename = "src/caseutil/__version__.py"},
+  {filename = "docs/part/badges.md"},
+  {filename = "src/caseutil/__init__.py"},
 ]
+
+# mypy
+
+[tool.mypy]
+python_version = "3.8"
+strict = true
+
+# hatch
+
+[tool.hatch.version]
+path = "src/caseutil/__init__.py"
 
 # ruff
 
 [tool.ruff]
-exclude = [".git", ".task", ".tox", "dist", "tmp"]
-line-length = 88
-indent-width = 4
-target-version = "py312"
+exclude = [".*", "dist"]
 [tool.ruff.lint]
-select = ["E4", "E7", "E9", "F", "S"]
-ignore = []
-fixable = ["ALL"]
-unfixable = []
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+select = ["E4", "E7", "E9", "F", "B", "S"]
+per-file-ignores."tests/**/*.py" = [
+  "S101",  # Use of `assert` detected
+]
 [tool.ruff.format]
 quote-style = "single"
-indent-style = "space"
-skip-magic-trailing-comma = false
-line-ending = "auto"
 docstring-code-format = true
 docstring-code-line-length = "dynamic"
 
-# uv
+# towncrier
 
-[tool.uv]
-package = true
+[tool.towncrier]
+directory = "NEWS.d"
+filename = "CHANGELOG.md"
+title_format = "## [v{version}](https://github.com/makukha/caseutil/releases/tag/v{version}) — {project_date}"
+issue_format = "[#{issue}](https://github.com/makukha/caseutil/issues/{issue})"
+type = [
+  {name = "Security ⚠️", directory = "security", showcontent = true},
+  {name = "Breaking 🔥", directory = "breaking", showcontent = true},
+  {name = "Removed 💨", directory = "removed", showcontent = true},
+  {name = "Deprecated ❄️", directory = "deprecated", showcontent = true},
+  {name = "Added 🌿", directory = "added", showcontent = true},
+  {name = "Changed", directory = "changed", showcontent = true},
+  {name = "Fixed", directory = "fixed", showcontent = true},
+  {name = "Docs", directory = "docs", showcontent = true},
+  {name = "Misc", directory = "misc", showcontent = true},
+]
