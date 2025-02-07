@@ -27,9 +27,7 @@ class Case(_CaseEnum):
 
 
 CASES = tuple(
-    getattr(v, 'value', v)
-    for k, v in vars(Case).items()
-    if not k.startswith('_')
+    getattr(v, 'value', v) for k, v in vars(Case).items() if not k.startswith('_')
 )
 
 

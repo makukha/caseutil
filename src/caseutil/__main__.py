@@ -9,31 +9,25 @@ from .cases import CASES, to_case, get_cases
 parser = ArgumentParser(
     prog='caseutil',
     formatter_class=RawDescriptionHelpFormatter,
-    description=textwrap.dedent('''
+    description=textwrap.dedent(
+        """
         Convert, detect, or match text case.\n
         When stdin is used as input, each line is tokenized and processed separately.\n
         <case> choices:
           {}
-        '''.format(','.join(CASES))
+        """.format(','.join(CASES))
     ),
 )
-parser.add_argument(
-    'text', default=sys.stdin, nargs='?',
-    help='text to be converted; if missing, stdin is used'
-)
+help_text = 'text to be converted; if missing, stdin is used'
+parser.add_argument('text', default=sys.stdin, nargs='?', help=help_text)
 
 group = parser.add_mutually_exclusive_group(required=True)
-group.add_argument(
-    '--version', action='version', version='%(prog)s ' + __version__
-)
-group.add_argument(
-    '-c', '--convert', choices=CASES, metavar='<case>',
-    help='convert [text] or stdin to <case>'
-)
-group.add_argument(
-    '-d', '--detect', action='store_true',
-    help='detect cases in [text] or stdin'
-)
+group.add_argument('--version', action='version', version='%(prog)s ' + __version__)
+
+help_c = 'convert [text] or stdin to <case>'
+help_d = 'detect cases in [text] or stdin'
+group.add_argument('-c', '--convert', choices=CASES, metavar='<case>', help=help_c)
+group.add_argument('-d', '--detect', action='store_true', help=help_d)
 
 
 def main():
