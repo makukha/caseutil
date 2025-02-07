@@ -1,17 +1,29 @@
+<!-- docsub: begin -->
+<!-- docsub: include docs/part/title.md -->
 # caseutil ⇄ 🐍🐫🍢
 > Case conversion and verification for Python: snake_case, camelCase, kebab-case, etc.
+<!-- docsub: end -->
 
-[![versions](https://img.shields.io/pypi/pyversions/caseutil.svg)](https://pypi.org/project/caseutil)  
-[![pypi](https://img.shields.io/pypi/v/caseutil.svg#v0.7.1)](https://pypi.python.org/pypi/caseutil)
-[![Tests](https://raw.githubusercontent.com/makukha/caseutil/v0.7.1/docs/badge/tests.svg)](https://github.com/makukha/caseutil)
-[![Coverage](https://raw.githubusercontent.com/makukha/caseutil/v0.7.1/docs/badge/coverage.svg)](https://github.com/makukha/caseutil)
-[![PyPI - Downloads](https://img.shields.io/pypi/dw/caseutil)](https://pypistats.org/packages/caseutil)  
+<!-- docsub: begin -->
+<!-- docsub: include docs/part/badges.md -->
 [![license](https://img.shields.io/github/license/makukha/caseutil.svg)](https://github.com/makukha/caseutil/blob/main/LICENSE)
-[![Documentation Status](https://readthedocs.org/projects/caseutil/badge/?version=latest)](https://caseutil.readthedocs.io/en/latest/?badge=latest)
-[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9342/badge)](https://www.bestpractices.dev/projects/9342)
+[![pypi](https://img.shields.io/pypi/v/caseutil.svg#v0.7.1)](https://pypi.python.org/pypi/caseutil)
+[![python versions](https://img.shields.io/pypi/pyversions/caseutil.svg)](https://pypi.org/project/caseutil)
+[![tests](https://raw.githubusercontent.com/makukha/caseutil/v0.7.1/docs/badge/tests.svg)](https://github.com/makukha/caseutil)
+[![coverage](https://raw.githubusercontent.com/makukha/caseutil/v0.7.1/docs/badge/coverage.svg)](https://github.com/makukha/caseutil)
+[![tested with multipython](https://img.shields.io/badge/tested_with-multipython-x)](https://github.com/makukha/multipython)
+[![docs status](https://readthedocs.org/projects/caseutil/badge/?version=latest)](https://caseutil.readthedocs.io/en/latest/?badge=latest)
+[![uses docsub](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/makukha/docsub/refs/heads/main/docs/badge/v1.json)](https://github.com/makukha/docsub)
+[![mypy](https://img.shields.io/badge/type_checked-mypy-%231674b1)](http://mypy.readthedocs.io)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/ruff)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![openssf best practices](https://www.bestpractices.dev/projects/9342/badge)](https://www.bestpractices.dev/projects/9342)
+<!-- docsub: end -->
 
-## Features
+# Features
 
+<!-- docsub: begin -->
+<!-- docsub: include docs/part/features.md -->
 * Verify and convert between most popular cases
 * Custom separators: `'foo.bar.baz'`, `'foo/bar/baz'`
 * Case detection
@@ -19,16 +31,17 @@
 * Pure Python 2.7 to 3.14+
 * No dependencies
 * 100% test coverage
+<!-- docsub: end -->
 
 ## Supported cases
 
 ### [Classification](https://caseutil.readthedocs.io/en/latest/classification/)
 
 ![Cases classification](docs/img/classification-dark.svg#gh-dark-mode-only)
-![Cases classification](docs/img/classification-light.svg#gh-light-mode-only)
+![Cases classification](docs/img/classification-default.svg#gh-light-mode-only)
 
-### Simple functions
-
+<!-- docsub: begin -->
+<!-- docsub: include docs/part/cases-table.md -->
 | Case          | Verify        | Convert       |
 |---------------|---------------|---------------|
 | snake_case    | `is_snake`    | `to_snake`    |
@@ -43,11 +56,28 @@
 | UPPER CASE    | `is_upper`    | `to_upper`    |
 | Title Case    | `is_title`    | `to_title`    |
 | Sentence case | `is_sentence` | `to_sentence` |
+<!-- docsub: end -->
 
-## Installation
+# Installation
 
 ```shell
 $ pip install caseutil
+```
+
+# Usage
+
+<!-- docsub: begin -->
+<!-- docsub: include docs/part/usage.md -->
+## Basic usage
+
+```doctest
+>>> from caseutil import *
+
+>>> is_snake('Foo bar-baz')
+False
+
+>>> to_snake('Foo bar-baz')
+'foo_bar_baz'
 ```
 
 ## Command line
@@ -70,17 +100,33 @@ hiThere
 seeYou
 ```
 
-## Basic usage
+### CLI Reference
 
-```doctest
->>> from caseutil import *
+<!-- docsub: begin #cli -->
+<!-- docsub: help caseutil -->
+<!-- docsub: lines after 2 upto -1 -->
+```shell
+$ caseutil --help
+usage: caseutil [-h] (--version | -c <case> | -d) [text]
 
->>> is_snake('Foo bar-baz')
-False
+Convert, detect, or match text case.
 
->>> to_snake('Foo bar-baz')
-'foo_bar_baz'
+When stdin is used as input, each line is tokenized and processed separately.
+
+<case> choices:
+  ada,camel,cobol,const,kebab,lower,pascal,sentence,snake,title,train,upper
+
+positional arguments:
+  text                  text to be converted; if missing, stdin is used
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  -c, --convert <case>  convert [text] or stdin to <case>
+  -d, --detect          detect cases in [text] or stdin
 ```
+<!-- docsub: end #cli -->
+
 
 ## Advanced usage
 
@@ -116,7 +162,7 @@ True
 
 ### Cases detection
 
-Use `get_cases()` function to determine case (or cases, if [ambiguous](https://caseutil.readthedocs.io/en/latest/classification/#ambiguity)):
+Use `get_cases()` function to determine case (or cases, if [ambiguous](classification.md#ambiguity)):
 
 ```doctest
 >>> get_cases('fooBar')
@@ -140,7 +186,7 @@ Use `words()` function:
 
 ### Tokenization
 
-Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see [Tokenization rules](https://caseutil.readthedocs.io/en/latest/tokenize/).
+Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see [Tokenization rules](tokenize.md).
 
 ```doctest
 >>> words('!some_reallyMESsy text--wit4Digits.3VeryWh3re--')
@@ -150,26 +196,8 @@ Word separators are non-word characters including underscore, and places where t
 ### Unicode support
 
 Only ASCII names are supported. Unicode support is planned.
+<!-- docsub: end -->
 
-## Development
-
-This project requires [Docker](https://www.docker.com).
-
-```shell
-$ git clone https://github.com/makukha/caseutil.git
-$ cd caseutil
-$ task dev
-```
-
-In dev environment:
-
-```shell
-$ task version -- minor
-$ task build
-$ task lint
-$ task format
-$ task test
-```
 
 ## Alternatives
 
@@ -182,7 +210,3 @@ See [Contributing](.github/CONTRIBUTING.md) guidelines.
 ## Authors
 
 * [Michael Makukha](https://github.com/makukha)
-
-## License
-
-[MIT License](https://github.com/makukha/caseutil/blob/main/LICENSE)
