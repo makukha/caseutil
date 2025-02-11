@@ -3,15 +3,17 @@ import sys
 
 
 if sys.version_info.major == 2:  # pragma: no cover
+    class CaseEnumBase:
+        pass
 
-    class _CaseEnum: ...
 else:
     from enum import Enum
 
-    class _CaseEnum(str, Enum): ...
+    class CaseEnumBase(str, Enum):
+        pass
 
 
-class Case(_CaseEnum):
+class Case(CaseEnumBase):
     ADA = 'ada'
     CAMEL = 'camel'
     COBOL = 'cobol'
@@ -25,10 +27,13 @@ class Case(_CaseEnum):
     TRAIN = 'train'
     UPPER = 'upper'
 
-
-CASES = tuple(
-    getattr(v, 'value', v) for k, v in vars(Case).items() if not k.startswith('_')
-)
+    @classmethod
+    def as_tuple(cls):
+        return tuple(
+            getattr(v, 'value', v)
+            for k, v in vars(cls).items()
+            if not k.startswith('_') and not isinstance(v, classmethod)
+        )
 
 
 # case patterns
@@ -258,4 +263,4 @@ def to_case(case, text):
 
 
 def get_cases(text):
-    return tuple(sorted(c for c in CASES if is_case(c, text)))
+    return tuple(sorted(c for c in Case.as_tuple() if is_case(c, text)))

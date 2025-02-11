@@ -3,7 +3,10 @@ import sys
 import textwrap
 
 from . import __version__
-from .cases import CASES, to_case, get_cases
+from .cases import Case, to_case, get_cases
+
+
+CASES = Case.as_tuple()
 
 
 parser = ArgumentParser(
@@ -36,7 +39,7 @@ def main():
     if args.convert:
         for line in source_lines(args.text):
             print(to_case(args.convert, line))
-    if args.detect:
+    elif args.detect:
         for line in source_lines(args.text):
             print(' '.join(get_cases(line)))
 
@@ -52,5 +55,5 @@ def source_lines(source):
         raise TypeError('Unsupported source type')
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     main()

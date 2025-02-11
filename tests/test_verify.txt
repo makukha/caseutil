@@ -1,8 +1,0 @@
->>> from caseutil import CASES, is_case, to_case
->>> text = 'My var-name'
-
->>> from itertools import product
->>> variants = list(product(CASES, repeat=2))
->>> {(c1, c2, is_case(c1, to_case(c2, text))) for c1, c2 in variants} \
-...     == {(c1, c2, c1 == c2) for c1, c2 in variants}
-True

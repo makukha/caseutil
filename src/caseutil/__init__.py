@@ -28,6 +28,7 @@ from .cases import (
     get_cases,
     is_case,
     to_case,
+    tokenize,
     words,
 )
 

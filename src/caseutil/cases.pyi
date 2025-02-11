@@ -14,8 +14,8 @@ class Case(str, Enum):
     TITLE = 'title'
     TRAIN = 'train'
     UPPER = 'upper'
-
-CASES: Tuple[str, ...]
+    @classmethod
+    def as_tuple(cls) -> Tuple[str, ...]: ...
 
 def is_case(case: Union[Case, str], text: str) -> bool: ...
 def to_case(case: Union[Case, str], text: str) -> str: ...
