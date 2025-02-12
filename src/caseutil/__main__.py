@@ -15,6 +15,7 @@ def stream(item):
         return io.StringIO(ioable(item if item.endswith('\n') else item + '\n'))
     return item
 
+
 def ioable(value, encoding='utf-8'):
     if sys.version_info < (3,):  # pragma: nocover  # coverage runs on Python 3
         return value.decode(encoding)
@@ -42,13 +43,15 @@ group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument('--version', action='version', version='%(prog)s ' + __version__)
 
 group.add_argument(
-    '-c', '--convert',
+    '-c',
+    '--convert',
     choices=Case.as_tuple(),
     metavar='<case>',
     help='convert [text] or stdin to <case>',
 )
 group.add_argument(
-    '-d', '--detect',
+    '-d',
+    '--detect',
     action='store_true',
     help='detect cases in [text] or stdin',
 )
@@ -67,7 +70,7 @@ def cli(argv=None, stdin=sys.stdin, stdout=sys.stdout):
     if args.text is None:
         args.text = stdin
 
-    def line(text): # type: (str) -> str
+    def line(text):  # type: (str) -> str
         return ioable(text + '\n')
 
     if args.detect:

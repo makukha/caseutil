@@ -64,7 +64,7 @@ class CliNormal(TestCase):
     @foreach(*data.X_MVN_OUT)  # type: ignore
     def test_convert_mvn(self, case, result):  # type: (str, str) -> None
         expected = '{}\n'.format(result)
-        self.call_cli(['-c', case, data.X_MVN_IN], )
+        self.call_cli(['-c', case, data.X_MVN_IN])
         self.assertEqual(expected, self.stdout.getvalue())
 
     def test_convert_multiline(self):  # type: () -> None
