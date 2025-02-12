@@ -163,7 +163,7 @@ Use function `get_cases()` to determine case (or cases, if
 <!-- docsub: x case tests/test_usage.py:CustomSeparators -->
 ### Custom separators
 
-Use fiunction`words()`:
+Use function `words()`:
 
 ```pycon
 >>> from caseutil import words, to_lower
