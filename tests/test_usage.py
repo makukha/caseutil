@@ -44,9 +44,9 @@ class CasesEnum(TestCase):
 
 
 @doctestcase()
-class VariableCases(TestCase):
+class ArbitraryCases(TestCase):
     """
-    Variable cases
+    Arbitrary cases
 
     Use functions `is_case()` and `to_case()` to deal with arbitrary supported case:
 
@@ -86,7 +86,7 @@ class CustomSeparators(TestCase):
     """
     Custom separators
 
-    Use fiunction`words()`:
+    Use function `words()`:
 
     >>> from caseutil import words, to_lower
 

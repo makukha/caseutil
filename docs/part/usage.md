@@ -1,7 +1,22 @@
-## Basic usage
+## Use cases
 
-```doctest
->>> from caseutil import *
+<!-- docsub: begin -->
+<!-- docsub: x caselist tests/test_usage.py -->
+* [Basic usage](#basic-usage)
+* [Cases enum](#cases-enum)
+* [Arbitrary cases](#arbitrary-cases)
+* [Detect cases](#detect-cases)
+* [Custom separators](#custom-separators)
+* [Tokenization](#tokenization)
+* [Unicode support *(not implemented)*](#unicode-support-not-implemented)
+<!-- docsub: end -->
+
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:BasicUsage -->
+### Basic usage
+
+```pycon
+>>> from caseutil import is_snake, to_snake
 
 >>> is_snake('Foo bar-baz')
 False
@@ -9,60 +24,15 @@ False
 >>> to_snake('Foo bar-baz')
 'foo_bar_baz'
 ```
-
-## Command line
-
-```shell
-$ caseutil -c const "hi there"
-HI_THERE
-```
-
-Invoke as Python module:
-```shell
-$ python -m caseutil -c const "hi there"
-HI_THERE
-```
-
-When reading from stdin, each line is processed separately:
-```shell
-$ echo "hi_there\nsee you" | python -m caseutil -c camel
-hiThere
-seeYou
-```
-
-### CLI Reference
-
-<!-- docsub: begin #cli -->
-<!-- docsub: help caseutil -->
-<!-- docsub: lines after 2 upto -1 -->
-```shell
-$ caseutil --help
-usage: caseutil [-h] (--version | -c <case> | -d) [text]
-
-Convert, detect, or match text case.
-
-When stdin is used as input, each line is tokenized and processed separately.
-
-<case> choices:
-  ada,camel,cobol,const,kebab,lower,pascal,sentence,snake,title,train,upper
-
-positional arguments:
-  text                  text to be converted; if missing, stdin is used
-
-options:
-  -h, --help            show this help message and exit
-  --version             show program's version number and exit
-  -c, --convert <case>  convert [text] or stdin to <case>
-  -d, --detect          detect cases in [text] or stdin
-```
-<!-- docsub: end #cli -->
+<!-- docsub: end -->
 
 
-## Advanced usage
-
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:CasesEnum -->
 ### Cases enum
 
 All supported cases are gathered in `Case` enum:
+
 ```python
 class Case(StrEnum):
     ADA = 'ada'
@@ -78,51 +48,88 @@ class Case(StrEnum):
     TRAIN = 'train'
     UPPER = 'upper'
 ```
+<!-- docsub: end -->
 
-### Universal operations
 
-Use functions `is_case()` and `to_case()` to deal with any supported case:
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:ArbitraryCases -->
+### Arbitrary cases
 
-```doctest
+Use functions `is_case()` and `to_case()` to deal with arbitrary supported case:
+
+```pycon
+>>> from caseutil import Case, is_case, to_case
+
 >>> is_case(Case.CAMEL, 'myVarName')
 True
+
 >>> to_case(Case.CONST, 'myVarName')
 'MY_VAR_NAME'
 ```
+<!-- docsub: end -->
 
-### Cases detection
 
-Use `get_cases()` function to determine case (or cases, if [ambiguous](classification.md#ambiguity)):
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:DetectCases -->
+### Detect cases
 
-```doctest
+Use function `get_cases()` to determine case (or cases, if
+[ambiguous](https://caseutil.readthedocs.io/en/latest/classification/#ambiguity)):
+
+```pycon
+>>> from caseutil import get_cases
+
 >>> get_cases('fooBar')
 ('camel',)
+
 >>> get_cases('My var-name')  # mixed case
 ()
->>> get_cases('Title')
+
+>>> get_cases('Title')  # matches multiple cases
 ('ada', 'pascal', 'sentence', 'title', 'train')
 ```
+<!-- docsub: end -->
 
+
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:CustomSeparators -->
 ### Custom separators
 
-Use `words()` function:
+Use fiunction`words()`:
 
-```doctest
+```pycon
+>>> from caseutil import words, to_lower
+
 >>> '/'.join(words(to_lower('myVarName')))
 'my/var/name'
+
 >>> '.'.join(words('myVarName'))
 'my.Var.Name'
 ```
+<!-- docsub: end -->
 
+
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:Tokenization -->
 ### Tokenization
 
-Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see [Tokenization rules](tokenize.md).
+Word separators are non-word characters including underscore, and places where
+text case is changed from lower to upper. Digits are not treated as separators.
+For more details, see
+[Tokenization rules](https://caseutil.readthedocs.io/en/latest/tokenize).
 
-```doctest
+```pycon
+>>> from caseutil import words
+
 >>> words('!some_reallyMESsy text--wit4Digits.3VeryWh3re--')
 ['some', 'really', 'ME', 'Ssy', 'text', 'wit4', 'Digits', '3Very', 'Wh3re']
 ```
+<!-- docsub: end -->
 
-### Unicode support
+
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:UnicodeSupport -->
+### Unicode support *(not implemented)*
 
 Only ASCII names are supported. Unicode support is planned.
+<!-- docsub: end -->

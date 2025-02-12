@@ -27,11 +27,11 @@ seeYou
 $ caseutil --help
 usage: caseutil [-h] (--version | -c <case> | -d) [text]
 
-Convert, detect, or match text case.
+  Convert, detect, or match text case.
 
-When stdin is used as input, each line is tokenized and processed separately.
+  When stdin is used as input, each line is tokenized and processed separately.
 
-<case> choices:
+cases:
   ada,camel,cobol,const,kebab,lower,pascal,sentence,snake,title,train,upper
 
 positional arguments:

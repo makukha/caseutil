@@ -30,28 +30,39 @@ dist/README.md: README.md
 
 
 .PHONY: docs
-docs: \
+docs: mkdocs README.md
+
+
+.PHONY: mkdocs
+mkdocs: \
+	docs/requirements.txt \
 	docs/index.md \
 	docs/tokenize.md \
-	docs/requirements.txt \
-	docs/img/classification-dark.svg \
-	docs/img/classification-default.svg \
-	README.md
-
-docs/%.md: FORCE
-	uv run docsub sync -i $@
+	images
 
 docs/requirements.txt: pyproject.toml uv.lock
 	uv export --only-group docs --no-emit-project > $@
+
+docs/index.md: FORCE
+	uv run docsub sync -i docs/part/cli.md docs/part/usage.md $@
+
+docs/tokenize.md: FORCE
+	uv run docsub sync -i $@
+
+
+.PHONY: images
+images: \
+	docs/img/classification-dark.svg \
+	docs/img/classification-default.svg \
 
 docs/img/classification-%.svg: docs/classification.md
 	mkdir -p .tmp
 	sed -ne '/^```mermaid/,/^```/{/^```mermaid/d; s/^```//; p;}' docs/classification.md > .tmp/classification.mmd
 	docker compose run --rm mermaid-cli -i /work/.tmp/classification.mmd -o $@ -I classification-$* -t $* -b transparent &>/dev/null
 
+
 README.md: FORCE
-	uv run docsub sync -i docs/part/usage.md $@
+	uv run docsub sync -i docs/part/cli.md docs/part/usage.md $@
 
 
 FORCE:
-

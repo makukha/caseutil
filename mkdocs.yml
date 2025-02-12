@@ -11,7 +11,9 @@ nav:
   - Classification: classification.md
   - Tokenization rules: tokenize.md
   - Alternatives: alternatives.md
-  - Contributing: contribute.md
+
+exclude_docs: |
+  part/*
 
 extra_css:
   - https://use.fontawesome.com/releases/v6.7.0/css/all.css

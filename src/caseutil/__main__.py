@@ -31,9 +31,9 @@ parser = ArgumentParser(
     formatter_class=RawDescriptionHelpFormatter,
     description=textwrap.dedent(
         """
-        Convert, detect, or match text case.\n
-        When stdin is used as input, each line is tokenized and processed separately.\n
-        <case> choices:
+          Convert, detect, or match text case.\n
+          When stdin is used as input, each line is tokenized and processed separately.\n
+        cases:
           {}
         """.format(','.join(Case.as_tuple()))
     ),
