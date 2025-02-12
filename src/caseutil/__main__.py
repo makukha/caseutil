@@ -1,3 +1,4 @@
+import io
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import sys
 import textwrap
@@ -6,7 +7,22 @@ from . import __version__
 from .cases import Case, to_case, get_cases
 
 
-CASES = Case.as_tuple()
+# helpers
+
+
+def stream(item):
+    if isinstance(item, str):
+        return io.StringIO(ioable(item if item.endswith('\n') else item + '\n'))
+    return item
+
+def ioable(value, encoding='utf-8'):
+    if sys.version_info < (3,):  # pragma: nocover  # coverage runs on Python 3
+        return value.decode(encoding)
+    else:
+        return value
+
+
+# parser
 
 
 parser = ArgumentParser(
@@ -18,42 +34,47 @@ parser = ArgumentParser(
         When stdin is used as input, each line is tokenized and processed separately.\n
         <case> choices:
           {}
-        """.format(','.join(CASES))
+        """.format(','.join(Case.as_tuple()))
     ),
 )
-help_text = 'text to be converted; if missing, stdin is used'
-parser.add_argument('text', default=sys.stdin, nargs='?', help=help_text)
 
 group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument('--version', action='version', version='%(prog)s ' + __version__)
 
-help_c = 'convert [text] or stdin to <case>'
-help_d = 'detect cases in [text] or stdin'
-group.add_argument('-c', '--convert', choices=CASES, metavar='<case>', help=help_c)
-group.add_argument('-d', '--detect', action='store_true', help=help_d)
+group.add_argument(
+    '-c', '--convert',
+    choices=Case.as_tuple(),
+    metavar='<case>',
+    help='convert [text] or stdin to <case>',
+)
+group.add_argument(
+    '-d', '--detect',
+    action='store_true',
+    help='detect cases in [text] or stdin',
+)
+parser.add_argument(
+    'text',
+    nargs='?',
+    help='text to be converted; if missing, stdin is used',
+)
 
 
-def main():
-    args = parser.parse_args()
-
-    if args.convert:
-        for line in source_lines(args.text):
-            print(to_case(args.convert, line))
-    elif args.detect:
-        for line in source_lines(args.text):
-            print(' '.join(get_cases(line)))
+# entrypoint
 
 
-def source_lines(source):
-    if hasattr(source, 'readline'):
-        for line in source:
-            yield line
-    elif isinstance(source, str):
-        for line in source.splitlines():
-            yield line
+def cli(argv=None, stdin=sys.stdin, stdout=sys.stdout):
+    args = parser.parse_args(argv)
+    if args.text is None:
+        args.text = stdin
+
+    def line(text): # type: (str) -> str
+        return ioable(text + '\n')
+
+    if args.detect:
+        stdout.writelines(line(' '.join(get_cases(ln))) for ln in stream(args.text))
     else:
-        raise TypeError('Unsupported source type')
+        stdout.writelines(line(to_case(args.convert, ln)) for ln in stream(args.text))
 
 
-if __name__ == '__main__':  # pragma: no cover
-    main()
+if __name__ == '__main__':
+    sys.exit(cli())
