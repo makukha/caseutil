@@ -188,9 +188,9 @@ mkdocs==1.6.1 ; python_full_version >= '3.12' \
 mkdocs-get-deps==0.2.0 ; python_full_version >= '3.12' \
     --hash=sha256:162b3d129c7fad9b19abfdcb9c1458a651628e4b1dea628ac68790fb3061c60c \
     --hash=sha256:2bf11d0b133e77a0dd036abeeb06dec8775e46efa526dc70667d8863eefc6134
-mkdocs-material==9.6.3 ; python_full_version >= '3.12' \
-    --hash=sha256:1125622067e26940806701219303b27c0933e04533560725d97ec26fd16a39cf \
-    --hash=sha256:c87f7d1c39ce6326da5e10e232aed51bae46252e646755900f4b0fc9192fa832
+mkdocs-material==9.6.4 ; python_full_version >= '3.12' \
+    --hash=sha256:414e8376551def6d644b8e6f77226022868532a792eb2c9accf52199009f568f \
+    --hash=sha256:4d1d35e1c1d3e15294cb7fa5d02e0abaee70d408f75027dc7be6e30fb32e6867
 mkdocs-material-extensions==1.3.1 ; python_full_version >= '3.12' \
     --hash=sha256:10c9511cea88f568257f960358a467d12b970e1f7b2c0e5fb2bb48cab1928443 \
     --hash=sha256:adff8b62700b25cb77b53358dad940f3ef973dd6db797907c49e3c2ef3ab4e31
