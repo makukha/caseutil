@@ -53,17 +53,22 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-  "bump-my-version; python_version >= '3.12'",
+  "bump-my-version ; python_version >= '3.12'",
   "docsub>=0.8 ; python_full_version >= '3.12'",
   "genbadge[tests,coverage]>=1.1 ; python_version >= '3.12'",
   "mypy ; python_version >= '3.12'",
-  "pytest>=8.3 ; python_version >= '3.12'",
   "ruff ; python_version >= '3.12'",
   "towncrier ; python_version >= '3.12'",
 ]
 docs = [
   "mkdocs>=0.17 ; python_version >= '3.12'",
   "mkdocs-material>=9.6 ; python_full_version >= '3.12'",
+]
+test = [
+  "doctestcase>=0.1",
+  "pytest>=8.3 ; python_version >= '3.12'",
+  "typing-extensions>=3.10 ; python_version >= '3.9'",
+  "unittest-expander>=0.4",
 ]
 
 # bump-my-version
@@ -97,6 +102,8 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 select = ["E4", "E7", "E9", "F", "B", "S"]
 per-file-ignores."tests/**/*.py" = [
   "S101",  # Use of `assert` detected
+  "S603",  # `subprocess` call: check for execution of untrusted input
+  "S607",  # Starting a process with a partial executable path
 ]
 [tool.ruff.format]
 quote-style = "single"

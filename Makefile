@@ -32,13 +32,14 @@ dist/README.md: README.md
 .PHONY: docs
 docs: \
 	docs/index.md \
+	docs/tokenize.md \
 	docs/requirements.txt \
 	docs/img/classification-dark.svg \
 	docs/img/classification-default.svg \
 	README.md
 
-docs/index.md: FORCE
-	uv run docsub apply -i $@
+docs/%.md: FORCE
+	uv run docsub sync -i $@
 
 docs/requirements.txt: pyproject.toml uv.lock
 	uv export --only-group docs --no-emit-project > $@
@@ -49,7 +50,7 @@ docs/img/classification-%.svg: docs/classification.md
 	docker compose run --rm mermaid-cli -i /work/.tmp/classification.mmd -o $@ -I classification-$* -t $* -b transparent &>/dev/null
 
 README.md: FORCE
-	uv run docsub apply -i docs/part/usage.md $@
+	uv run docsub sync -i docs/part/usage.md $@
 
 
 FORCE:
