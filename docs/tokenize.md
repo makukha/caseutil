@@ -1,26 +1,28 @@
+<!-- docsub: begin -->
+<!-- docsub: x case -d1 tests/test_tokenizer.py:TokenizationRules -->
 # Tokenization rules
 
-```doctest
+```pycon
 >>> from caseutil import tokenize
 ```
 
 Text is tokenized as space separated words list, preserving case.
 
-```doctest
+```pycon
 >>> tokenize('Space-separated,phrase')
 'Space separated phrase'
 ```
 
 Digit is a part of the word:
 
-```doctest
+```pycon
 >>> tokenize('some_0_Digits111')
 'some 0 Digits111'
 ```
 
 All non-word characters including underscore are word separators:
 
-```doctest
+```pycon
 >>> ascii = ''.join(str(chr(c)) for c in range(256))
 >>> import re
 >>> sep = '_' + re.sub(r'\w', '', ascii)
@@ -31,7 +33,7 @@ True
 When text case is changed from lower to upper, this is also a word separator, but
 case change from upper to lower is not:
 
-```doctest
+```pycon
 >>> tokenize('ErrorType')
 'Error Type'
 ```
@@ -39,7 +41,7 @@ case change from upper to lower is not:
 When case is changed from lower to upper and there are digits in between,
 separator is added after the digits:
 
-```doctest
+```pycon
 >>> tokenize('Http404Error')
 'Http404 Error'
 >>> tokenize('Http404error')
@@ -49,7 +51,7 @@ separator is added after the digits:
 If there are multiple upper case letters followed by a lower case, the separator is
 inserted before the last upper letter:
 
-```doctest
+```pycon
 >>> tokenize('HTTPError')
 'HTTP Error'
 >>> tokenize('HTTP2Error')
@@ -58,21 +60,22 @@ inserted before the last upper letter:
 
 Initial and trailing separators are stripped:
 
-```doctest
+```pycon
 >>> tokenize('_some_name_')
 'some name'
 ```
 
 Multiple separators are treated as one:
 
-```doctest
+```pycon
 >>> tokenize('some-._name')
 'some name'
 ```
 
 Empty string remains itself:
 
-```doctest
+```pycon
 >>> tokenize('')
 ''
 ```
+<!-- docsub: end -->
