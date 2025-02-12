@@ -34,6 +34,7 @@ class TestOperations(TestCase):
         ...
     ValueError: Unsupported case: unsupported
     """
+
     def test_empty_string(self):  # type: () -> None
         all_cases = Case.as_tuple()
         self.assertFalse(any(is_case(c, '') for c in all_cases))

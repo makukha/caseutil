@@ -64,5 +64,6 @@ __all__ = [
     'get_cases',
     'is_case',
     'to_case',
+    'tokenize',
     'words',
 ]

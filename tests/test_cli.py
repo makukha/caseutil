@@ -16,6 +16,7 @@ except ImportError:
 
 # helpers
 
+
 def assertErr(self, exc, msg):  # type: (TestCase, CalledProcessError, str) -> None
     self.assertNotEqual(exc.returncode, 0)
     out = exc.output if isinstance(exc.output, str) else exc.output.decode()
@@ -23,6 +24,7 @@ def assertErr(self, exc, msg):  # type: (TestCase, CalledProcessError, str) -> N
 
 
 # tests
+
 
 @expand()
 class TestCli(TestCase):

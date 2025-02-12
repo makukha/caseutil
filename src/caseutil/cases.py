@@ -3,6 +3,7 @@ import sys
 
 
 if sys.version_info.major == 2:  # pragma: no cover
+
     class CaseEnumBase:
         pass
 
