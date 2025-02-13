@@ -120,41 +120,41 @@ gh-pr *title:
 # just pypi-publish
 #
 
-## bump project version
-#[group('release')]
-#bump:
-#    #!/usr/bin/env bash
-#    set -euo pipefail
-#    uv run bump-my-version show-bump
-#    printf 'Choose bump path: '
-#    read BUMP
-#    uv run bump-my-version bump -- "$BUMP"
-#    uv lock
-#
-## collect changelog entries
-#[group('release')]
-#changelog:
-#    uv run towncrier build --yes --version "{{version}}"
-#    sed -e's/^### \(.*\)$/***\1***/; s/\([a-z]\)\*\*\*$/\1***/' -i '' CHANGELOG.md
-#
-## create GitHub release
-#[group('release')]
-#gh-release:
-#    #!/usr/bin/env bash
-#    set -euo pipefail
-#    if [ "{{git-head}}" != "main" ]; then
-#        echo "Can release from main branch only"
-#        exit 1
-#    fi
-#    tag="v{{version}}"
-#    git tag "$tag" HEAD
-#    git push origin tag "$tag"
-#    gh release create -d -t "$tag — $(date -Idate)" --generate-notes "$tag"
-#
-## publish package on PyPI
-#[group('release')]
-#pypi-publish: build
-#    uv publish
+# bump project version
+[group('release')]
+bump:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    uv run bump-my-version show-bump
+    printf 'Choose bump path: '
+    read BUMP
+    uv run bump-my-version bump -- "$BUMP"
+    uv lock
+
+# collect changelog entries
+[group('release')]
+changelog:
+    uv run towncrier build --yes --version "{{version}}"
+    sed -e's/^### \(.*\)$/***\1***/; s/\([a-z]\)\*\*\*$/\1***/' -i '' CHANGELOG.md
+
+# create GitHub release
+[group('release')]
+gh-release:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ "{{git-head}}" != "main" ]; then
+        echo "Can release from main branch only"
+        exit 1
+    fi
+    tag="v{{version}}"
+    git tag "$tag" HEAD
+    git push origin tag "$tag"
+    gh release create -d -t "$tag — $(date -Idate)" --generate-notes "$tag"
+
+# publish package on PyPI
+[group('release')]
+pypi-publish: build
+    uv publish
 
 # update GitHub repository metadata from pyproject.toml
 [group('release')]
