@@ -40,5 +40,5 @@ X_AMBIGUOUS = (
     ('UPPER', 'cobol const upper'),
     # single character
     ('l', 'camel kebab lower snake'),
-    # ('U', 'ada cobol const pascal sentence title train upper'),
+    ('U', 'ada cobol const pascal sentence title train upper'),
 )

@@ -41,7 +41,7 @@ class Case(CaseEnumBase):
 
 UPPER = r'(?:[A-Z0-9]+)'
 LOWER = r'(?:[a-z0-9]+)'
-TITLE = r'(?:[0-9]*[A-Z]' + LOWER + ')'
+TITLE = r'(?:[0-9]*[A-Z](?:' + LOWER + '|$))'
 
 LUT = {'LOWER': LOWER, 'UPPER': UPPER, 'TITLE': TITLE}
 
