@@ -1,17 +1,29 @@
+<!-- docsub: begin -->
+<!-- docsub: include docs/part/title.md -->
 # caseutil ⇄ 🐍🐫🍢
 > Case conversion and verification for Python: snake_case, camelCase, kebab-case, etc.
+<!-- docsub: end -->
 
-[![versions](https://img.shields.io/pypi/pyversions/caseutil.svg)](https://pypi.org/project/caseutil)  
-[![pypi](https://img.shields.io/pypi/v/caseutil.svg#v0.7.1)](https://pypi.python.org/pypi/caseutil)
-[![Tests](https://raw.githubusercontent.com/makukha/caseutil/v0.7.1/docs/badge/tests.svg)](https://github.com/makukha/caseutil)
-[![Coverage](https://raw.githubusercontent.com/makukha/caseutil/v0.7.1/docs/badge/coverage.svg)](https://github.com/makukha/caseutil)
-[![PyPI - Downloads](https://img.shields.io/pypi/dw/caseutil)](https://pypistats.org/packages/caseutil)  
+<!-- docsub: begin -->
+<!-- docsub: include docs/part/badges.md -->
 [![license](https://img.shields.io/github/license/makukha/caseutil.svg)](https://github.com/makukha/caseutil/blob/main/LICENSE)
-[![Documentation Status](https://readthedocs.org/projects/caseutil/badge/?version=latest)](https://caseutil.readthedocs.io/en/latest/?badge=latest)
-[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9342/badge)](https://www.bestpractices.dev/projects/9342)
+[![pypi](https://img.shields.io/pypi/v/caseutil.svg#v0.7.1)](https://pypi.python.org/pypi/caseutil)
+[![python versions](https://img.shields.io/pypi/pyversions/caseutil.svg)](https://pypi.org/project/caseutil)
+[![tests](https://raw.githubusercontent.com/makukha/caseutil/v0.7.1/docs/badge/tests.svg)](https://github.com/makukha/caseutil)
+[![coverage](https://raw.githubusercontent.com/makukha/caseutil/v0.7.1/docs/badge/coverage.svg)](https://github.com/makukha/caseutil)
+[![tested with multipython](https://img.shields.io/badge/tested_with-multipython-x)](https://github.com/makukha/multipython)
+[![docs status](https://readthedocs.org/projects/caseutil/badge/?version=latest)](https://caseutil.readthedocs.io/en/latest/?badge=latest)
+[![uses docsub](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/makukha/docsub/refs/heads/main/docs/badge/v1.json)](https://github.com/makukha/docsub)
+[![mypy](https://img.shields.io/badge/type_checked-mypy-%231674b1)](http://mypy.readthedocs.io)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/ruff)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![openssf best practices](https://www.bestpractices.dev/projects/9342/badge)](https://www.bestpractices.dev/projects/9342)
+<!-- docsub: end -->
 
-## Features
+# Features
 
+<!-- docsub: begin -->
+<!-- docsub: include docs/part/features.md -->
 * Verify and convert between most popular cases
 * Custom separators: `'foo.bar.baz'`, `'foo/bar/baz'`
 * Case detection
@@ -19,16 +31,17 @@
 * Pure Python 2.7 to 3.14+
 * No dependencies
 * 100% test coverage
+<!-- docsub: end -->
 
 ## Supported cases
 
 ### [Classification](https://caseutil.readthedocs.io/en/latest/classification/)
 
 ![Cases classification](docs/img/classification-dark.svg#gh-dark-mode-only)
-![Cases classification](docs/img/classification-light.svg#gh-light-mode-only)
+![Cases classification](docs/img/classification-default.svg#gh-light-mode-only)
 
-### Simple functions
-
+<!-- docsub: begin -->
+<!-- docsub: include docs/part/cases-table.md -->
 | Case          | Verify        | Convert       |
 |---------------|---------------|---------------|
 | snake_case    | `is_snake`    | `to_snake`    |
@@ -43,13 +56,156 @@
 | UPPER CASE    | `is_upper`    | `to_upper`    |
 | Title Case    | `is_title`    | `to_title`    |
 | Sentence case | `is_sentence` | `to_sentence` |
+<!-- docsub: end -->
 
-## Installation
+# Installation
 
 ```shell
 $ pip install caseutil
 ```
 
+<!-- docsub: begin #usage.md -->
+<!-- docsub: include docs/part/usage.md -->
+## Use cases
+
+<!-- docsub: begin -->
+<!-- docsub: x caselist tests/test_usage.py -->
+* [Basic usage](#basic-usage)
+* [Cases enum](#cases-enum)
+* [Arbitrary cases](#arbitrary-cases)
+* [Detect cases](#detect-cases)
+* [Custom separators](#custom-separators)
+* [Tokenization](#tokenization)
+* [Unicode support *(not implemented)*](#unicode-support-not-implemented)
+<!-- docsub: end -->
+
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:BasicUsage -->
+### Basic usage
+
+```pycon
+>>> from caseutil import is_snake, to_snake
+
+>>> is_snake('Foo bar-baz')
+False
+
+>>> to_snake('Foo bar-baz')
+'foo_bar_baz'
+```
+<!-- docsub: end -->
+
+
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:CasesEnum -->
+### Cases enum
+
+All supported cases are gathered in `Case` enum:
+
+```python
+class Case(StrEnum):
+    ADA = 'ada'
+    CAMEL = 'camel'
+    COBOL = 'cobol'
+    CONST = 'const'
+    KEBAB = 'kebab'
+    LOWER = 'lower'
+    PASCAL = 'pascal'
+    SENTENCE = 'sentence'
+    SNAKE = 'snake'
+    TITLE = 'title'
+    TRAIN = 'train'
+    UPPER = 'upper'
+```
+<!-- docsub: end -->
+
+
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:ArbitraryCases -->
+### Arbitrary cases
+
+Use functions `is_case()` and `to_case()` to deal with arbitrary supported case:
+
+```pycon
+>>> from caseutil import Case, is_case, to_case
+
+>>> is_case(Case.CAMEL, 'myVarName')
+True
+
+>>> to_case(Case.CONST, 'myVarName')
+'MY_VAR_NAME'
+```
+<!-- docsub: end -->
+
+
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:DetectCases -->
+### Detect cases
+
+Use function `get_cases()` to determine case (or cases, if
+[ambiguous](https://caseutil.readthedocs.io/en/latest/classification/#ambiguity)):
+
+```pycon
+>>> from caseutil import get_cases
+
+>>> get_cases('fooBar')
+('camel',)
+
+>>> get_cases('My var-name')  # mixed case
+()
+
+>>> get_cases('Title')  # matches multiple cases
+('ada', 'pascal', 'sentence', 'title', 'train')
+```
+<!-- docsub: end -->
+
+
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:CustomSeparators -->
+### Custom separators
+
+Use function `words()`:
+
+```pycon
+>>> from caseutil import words, to_lower
+
+>>> '/'.join(words(to_lower('myVarName')))
+'my/var/name'
+
+>>> '.'.join(words('myVarName'))
+'my.Var.Name'
+```
+<!-- docsub: end -->
+
+
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:Tokenization -->
+### Tokenization
+
+Word separators are non-word characters including underscore, and places where
+text case is changed from lower to upper. Digits are not treated as separators.
+For more details, see
+[Tokenization rules](https://caseutil.readthedocs.io/en/latest/tokenize).
+
+```pycon
+>>> from caseutil import words
+
+>>> words('!some_reallyMESsy text--wit4Digits.3VeryWh3re--')
+['some', 'really', 'ME', 'Ssy', 'text', 'wit4', 'Digits', '3Very', 'Wh3re']
+```
+<!-- docsub: end -->
+
+
+<!-- docsub: begin -->
+<!-- docsub: x case tests/test_usage.py:UnicodeSupport -->
+### Unicode support *(not implemented)*
+
+Only ASCII names are supported. Unicode support is planned.
+<!-- docsub: end -->
+<!-- docsub: end #usage.md -->
+
+
+<!-- docsub: begin #cli.md -->
+<!-- docsub: include docs/part/cli.md -->
 ## Command line
 
 ```shell
@@ -70,119 +226,48 @@ hiThere
 seeYou
 ```
 
-## Basic usage
+### CLI Reference
 
-```doctest
->>> from caseutil import *
+<!-- docsub: begin #caseutil-help -->
+<!-- docsub: help caseutil -->
+<!-- docsub: lines after 2 upto -1 -->
+```text
+$ caseutil --help
+usage: caseutil [-h] (--version | -c <case> | -d) [text]
 
->>> is_snake('Foo bar-baz')
-False
+  Convert, detect, or match text case.
 
->>> to_snake('Foo bar-baz')
-'foo_bar_baz'
+  When stdin is used as input, each line is tokenized and processed separately.
+
+cases:
+  ada,camel,cobol,const,kebab,lower,pascal,sentence,snake,title,train,upper
+
+positional arguments:
+  text                  text to be converted; if missing, stdin is used
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  -c, --convert <case>  convert [text] or stdin to <case>
+  -d, --detect          detect cases in [text] or stdin
 ```
+<!-- docsub: end #caseutil-help -->
+<!-- docsub: end #cli.md -->
 
-## Advanced usage
 
-### Cases enum
-
-All supported cases are gathered in `Case` enum:
-```python
-class Case(StrEnum):
-    ADA = 'ada'
-    CAMEL = 'camel'
-    COBOL = 'cobol'
-    CONST = 'const'
-    KEBAB = 'kebab'
-    LOWER = 'lower'
-    PASCAL = 'pascal'
-    SENTENCE = 'sentence'
-    SNAKE = 'snake'
-    TITLE = 'title'
-    TRAIN = 'train'
-    UPPER = 'upper'
-```
-
-### Universal operations
-
-Use functions `is_case()` and `to_case()` to deal with any supported case:
-
-```doctest
->>> is_case(Case.CAMEL, 'myVarName')
-True
->>> to_case(Case.CONST, 'myVarName')
-'MY_VAR_NAME'
-```
-
-### Cases detection
-
-Use `get_cases()` function to determine case (or cases, if [ambiguous](https://caseutil.readthedocs.io/en/latest/classification/#ambiguity)):
-
-```doctest
->>> get_cases('fooBar')
-('camel',)
->>> get_cases('My var-name')  # mixed case
-()
->>> get_cases('Title')
-('ada', 'pascal', 'sentence', 'title', 'train')
-```
-
-### Custom separators
-
-Use `words()` function:
-
-```doctest
->>> '/'.join(words(to_lower('myVarName')))
-'my/var/name'
->>> '.'.join(words('myVarName'))
-'my.Var.Name'
-```
-
-### Tokenization
-
-Word separators are non-word characters including underscore, and places where text case is changed from lower to upper. Digits are not treated as separators. For more details, see [Tokenization rules](https://caseutil.readthedocs.io/en/latest/tokenize/).
-
-```doctest
->>> words('!some_reallyMESsy text--wit4Digits.3VeryWh3re--')
-['some', 'really', 'ME', 'Ssy', 'text', 'wit4', 'Digits', '3Very', 'Wh3re']
-```
-
-### Unicode support
-
-Only ASCII names are supported. Unicode support is planned.
-
-## Development
-
-This project requires [Docker](https://www.docker.com).
-
-```shell
-$ git clone https://github.com/makukha/caseutil.git
-$ cd caseutil
-$ task dev
-```
-
-In dev environment:
-
-```shell
-$ task version -- minor
-$ task build
-$ task lint
-$ task format
-$ task test
-```
-
-## Alternatives
+# Alternatives
 
 [70+ packages](https://caseutil.readthedocs.io/en/latest/alternatives/)
 
-## Contributing
+# Contributing
 
 See [Contributing](.github/CONTRIBUTING.md) guidelines.
 
-## Authors
+# Authors
 
 * [Michael Makukha](https://github.com/makukha)
 
-## License
 
-[MIT License](https://github.com/makukha/caseutil/blob/main/LICENSE)
+## See also
+
+* [Project changelog](https://github.com/makukha/caseutil/tree/main/CHANGELOG.md)

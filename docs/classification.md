@@ -47,12 +47,12 @@ columns 6
 
 ## Ambiguity
 
-1. When there is a single word (no separators possible), all 12 cases reduce to 3 classes:
+1. When there is a single word (no separators possible), all 12 cases are reduced to 3 classes:
    * `lower` = `camel` = `kebab` = `snake`
    * `Title` = `Ada` = `Pascal` = `Sentence` = `Train`
    * `UPPER` = `COBOL` = `CONST`
 
-2. When there is a single character (Title and UPPER match), all 12 cases reduce to 2 classes:
+2. When there is a single character ("Title" and "UPPER" match), all 12 cases are reduced to 2 classes:
    * `lower` = `camel` = `kebab` = `snake`
    * `Title` = `Ada` = `Pascal` = `Sentence` = `Train` = `UPPER` = `COBOL` = `CONST`
 

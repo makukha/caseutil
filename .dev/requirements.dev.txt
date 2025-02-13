@@ -1,3 +1,0 @@
-bump-my-version
-genbadge[coverage,tests]
-ruff

@@ -10,10 +10,10 @@ nav:
   - Get Started: index.md
   - Classification: classification.md
   - Tokenization rules: tokenize.md
-  - CLI Reference: cli.md
-  - API Reference: api.md
   - Alternatives: alternatives.md
-  - Contributing: contribute.md
+
+exclude_docs: |
+  part/*
 
 extra_css:
   - https://use.fontawesome.com/releases/v6.7.0/css/all.css
@@ -26,19 +26,19 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - toc:
+      permalink: true
+      title: On this page
 
 theme:
   name: material
   features:
     - navigation.instant
     - navigation.instant.prefetch
+    - navigation.sections
     - navigation.tracking
     - search.highlight
     - search.suggest
-    - toc.integrate
-  font:
-    text: Roboto
-    code: JetBrains Mono
   icon:
     repo: fontawesome/brands/github
   palette:
